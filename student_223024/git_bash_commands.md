@@ -12,8 +12,7 @@
  - git push -u origin main
 
 ### создаем папку члена команды
- - создаем новую папку в локальном репозитории
- - создаем файл README.md, .gitignore и git_bash_commands.md
+ - создаем новую папку в локальном репозитории, в ней файлы README.md, .gitignore и git_bash_commands.md
  - git add .
  - git commit -m "создание папки"
  - git push
