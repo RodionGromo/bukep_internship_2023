@@ -1,0 +1,19 @@
+# Файл отчета выполнения задания
+### Для создания репозитория:
+ - создаем пустой репозиторий на сайте github
+ - создаем файл README.md в отдельной папке
+
+### далее используем команды для создания структуры репозитория:
+ - git init
+ - git add README.md
+ - git commit -m "First commit"
+ - git branch -M main
+ - git remote add origin https://github.com/RodionGromo/bukep_internship_2023.git
+ - git push -u origin main
+
+### создаем папку члена команды
+ - создаем новую папку в локальном репозитории
+ - создаем файл README.md, .gitignore и git_bash_commands.md
+ - git add .
+ - git commit -m "создание папки"
+ - git push
