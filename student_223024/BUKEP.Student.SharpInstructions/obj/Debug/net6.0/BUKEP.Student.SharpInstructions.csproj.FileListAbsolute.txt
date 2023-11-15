@@ -1,0 +1,15 @@
+E:\workge\student_223024\BUKEP.Student.SharpInstructions\bin\Debug\net6.0\BUKEP.Student.SharpInstructions.exe
+E:\workge\student_223024\BUKEP.Student.SharpInstructions\bin\Debug\net6.0\BUKEP.Student.SharpInstructions.deps.json
+E:\workge\student_223024\BUKEP.Student.SharpInstructions\bin\Debug\net6.0\BUKEP.Student.SharpInstructions.runtimeconfig.json
+E:\workge\student_223024\BUKEP.Student.SharpInstructions\bin\Debug\net6.0\BUKEP.Student.SharpInstructions.dll
+E:\workge\student_223024\BUKEP.Student.SharpInstructions\bin\Debug\net6.0\BUKEP.Student.SharpInstructions.pdb
+E:\workge\student_223024\BUKEP.Student.SharpInstructions\obj\Debug\net6.0\BUKEP.Student.SharpInstructions.csproj.AssemblyReference.cache
+E:\workge\student_223024\BUKEP.Student.SharpInstructions\obj\Debug\net6.0\BUKEP.Student.SharpInstructions.GeneratedMSBuildEditorConfig.editorconfig
+E:\workge\student_223024\BUKEP.Student.SharpInstructions\obj\Debug\net6.0\BUKEP.Student.SharpInstructions.AssemblyInfoInputs.cache
+E:\workge\student_223024\BUKEP.Student.SharpInstructions\obj\Debug\net6.0\BUKEP.Student.SharpInstructions.AssemblyInfo.cs
+E:\workge\student_223024\BUKEP.Student.SharpInstructions\obj\Debug\net6.0\BUKEP.Student.SharpInstructions.csproj.CoreCompileInputs.cache
+E:\workge\student_223024\BUKEP.Student.SharpInstructions\obj\Debug\net6.0\BUKEP.Student.SharpInstructions.dll
+E:\workge\student_223024\BUKEP.Student.SharpInstructions\obj\Debug\net6.0\refint\BUKEP.Student.SharpInstructions.dll
+E:\workge\student_223024\BUKEP.Student.SharpInstructions\obj\Debug\net6.0\BUKEP.Student.SharpInstructions.pdb
+E:\workge\student_223024\BUKEP.Student.SharpInstructions\obj\Debug\net6.0\BUKEP.Student.SharpInstructions.genruntimeconfig.cache
+E:\workge\student_223024\BUKEP.Student.SharpInstructions\obj\Debug\net6.0\ref\BUKEP.Student.SharpInstructions.dll
