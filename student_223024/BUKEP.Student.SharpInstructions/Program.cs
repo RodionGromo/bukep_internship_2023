@@ -24,7 +24,14 @@
                 }
             }
             bool successfulParse = int.TryParse(Console.ReadLine(), out int userout);
-            return successfulParse ? userout : 0;
+            if(successfulParse)
+            {
+                return userout;
+            } else
+            {
+                Console.WriteLine("Введные данные не распознаны как число, будет установлено число 0...");
+                return 0;
+            }
         }
 
         static bool GetUserKeyCompared(ConsoleKey key, string message="") {
