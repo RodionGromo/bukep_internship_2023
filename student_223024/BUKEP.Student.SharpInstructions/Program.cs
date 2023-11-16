@@ -2,11 +2,15 @@
 {
     internal class Program
     {
-        static Dictionary<int, string> instructions = new()
+        static readonly Dictionary<int, string> instructions = new()
         {
             {1, "if else"}, {2, "while"}, {3, "do while"}, {4, "for"}, {5, "foreach"}, {6, "switch"}
         };
-        static string ReturnToListText = "Для повтора нажмите Enter, для возврата к списку нажмите Esc:\n";
+        static readonly string ReturnToListText = "Для повтора нажмите Enter, для возврата к списку нажмите Esc:\n";
+        static readonly List<string> actions = new() {
+            "-", "+", "/", "*", "%"
+        };
+
 
         static int GetUserInt(string message="", bool newline=true)
         {
@@ -74,16 +78,13 @@
 
         private static void SubP_switch()
         {
-            List<string> list = new() { 
-                "-", "+", "/", "*", "%"
-            };
         start_switch:
             Console.WriteLine("Подпрограмма switch - выполняет выбранное действие над числами");
             int n1 = GetUserInt("Введите число 1: ", newline: false);
             int n2 = GetUserInt("Введите число 2: ", newline: false);
-            for (int i = 0; i < list.Count; i++) { Console.WriteLine($"{i + 1}. {list[i]}"); };
+            for (int i = 0; i < actions.Count; i++) { Console.WriteLine($"{i + 1}. {actions[i]}"); };
             int n3 = GetUserInt("Введите число, соотвествующее номеру действия: ", newline: false);
-            if (n3 < 1 || n3 > list.Count)
+            if (n3 < 1 || n3 > actions.Count)
             {
                 Console.WriteLine("Такого действия нет, отмена...");
                 goto restart_switch;
@@ -94,7 +95,7 @@
                 goto restart_switch;
             }
             int res = 0;
-            switch (list[n3-1])
+            switch (actions[n3-1])
             {
                 case "-":
                     res = n1 - n2; break;
