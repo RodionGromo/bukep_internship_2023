@@ -12,7 +12,7 @@
         };
 
 
-        static int GetUserInt(string message="", bool newline=true)
+        static int? GetUserInt(string message="", bool newline=true)
         {
             if (!string.IsNullOrEmpty(message))
             {
@@ -24,14 +24,25 @@
                 }
             }
             bool successfulParse = int.TryParse(Console.ReadLine(), out int userout);
-            if(successfulParse)
+            return successfulParse ? userout : null;
+        }
+
+        static int GetUserIntRetrying(string message="", bool newline=true, bool onlyPositives=false, bool includeZero=true)
+        {
+            bool isSuccesful = false;
+            int? userout;
+            do
             {
-                return userout;
-            } else
-            {
-                Console.WriteLine("Введные данные не распознаны как число, будет установлено число 0...");
-                return 0;
-            }
+                userout = GetUserInt(message, newline);
+                if(userout is not null)
+                {
+                    isSuccesful |= onlyPositives && includeZero && userout > -1;
+                    isSuccesful |= onlyPositives && !includeZero && userout > 0;
+                    isSuccesful |= !onlyPositives && !includeZero && userout != 0;
+                    isSuccesful |= !onlyPositives && includeZero;
+                }
+            } while (!isSuccesful);
+            return (int)userout;
         }
 
         static bool GetUserKeyCompared(ConsoleKey key, string message="") {
@@ -45,7 +56,7 @@
         {
         start_main:
             SubprogramSelector();
-            int userout = GetUserInt();
+            int userout = GetUserIntRetrying();
             switch (userout)
             {
                 case 1:
@@ -86,11 +97,12 @@
         private static void SubP_switch()
         {
         start_switch:
+            // тут действительно не важно какие числа будут, если оба нуля то конечно проблема, а так без разницы
             Console.WriteLine("Подпрограмма switch - выполняет выбранное действие над числами");
-            int n1 = GetUserInt("Введите число 1: ", newline: false);
-            int n2 = GetUserInt("Введите число 2: ", newline: false);
+            int n1 = GetUserIntRetrying("Введите число 1: ", newline: false);
+            int n2 = GetUserIntRetrying("Введите число 2: ", newline: false);
             for (int i = 0; i < actions.Count; i++) { Console.WriteLine($"{i + 1}. {actions[i]}"); };
-            int n3 = GetUserInt("Введите число, соотвествующее номеру действия: ", newline: false);
+            int n3 = GetUserIntRetrying("Введите число, соотвествующее номеру действия: ", newline: false);
             if (n3 < 1 || n3 > actions.Count)
             {
                 Console.WriteLine("Такого действия нет, отмена...");
@@ -136,10 +148,11 @@
         private static void SubP_foreach()
         {
         start_foreach:
+            // я думаю тут можно оставить отрицательные числа, ничего страшного не случится если отнять, а не прибавить
             Console.WriteLine("Подпрограмма foreach - подпрограмма добавляет число 1 к каждому символу введенной строки");
             Console.Write("Введите текст: ");
             string? str = Console.ReadLine();
-            int userin = GetUserInt("Введите число: ",newline: false);
+            int userin = GetUserIntRetrying("Введите число: ",newline: false);
             string newstr = "";
             if (string.IsNullOrEmpty(str))
             {
@@ -166,19 +179,43 @@
         private static void SubP_for()
         {
         start_for:
+            // вот тут проблема, три числа должны быть одинакового знака, иначе можно застрять в бесконечном цикле
+            // плюс третье не должно быть нулем
             Console.WriteLine("Подпрограмма for - подпрограмма будет перебирать числа от числа 1 до числа 2 с шагом числа 3");
-            int n1 = GetUserInt("Введите число 1: ",false);
-            int n2 = GetUserInt("Введите число 2: ", false);
-            int n3 = GetUserInt("Введите число 3: ", false);
+            int n1 = GetUserIntRetrying("Введите число 1: ", false);
+            int n2 = GetUserIntRetrying("Введите число 2: ", false);
+            int n3 = GetUserIntRetrying("Введите число 3: ", false, includeZero: false);
+            if (n3 > 0)
+            {
+                if (n1 >= n2)
+                {
+                    Console.WriteLine("Циклу нечего перебирать, отмена...");
+                    goto restart_for;
+                }
+            }
+            else if (n3 < 0)
+            {
+                if (n1 <= n2)
+                {
+                    Console.WriteLine("Циклу нечего перебирать, отмена...");
+                    goto restart_for;
+                }
+            }
+
             if (n1 >= n2)
             {
-                Console.WriteLine("Циклу нечего перебирать, отмена...");
-                goto restart_for;
+                for (int i = n1; i > n2; i += n3)
+                {
+                    Console.WriteLine(i.ToString());
+                }
+            } 
+            else {
+                for (int i = n1; i < n2; i += n3)
+                {
+                    Console.WriteLine(i.ToString());
+                }
             }
-            for(int i = n1; i < n2; i += n3)
-            {
-                Console.WriteLine(i.ToString());
-            }
+            
         restart_for:
             if (GetUserKeyCompared(ConsoleKey.Enter, ReturnToListText))
             {
@@ -189,9 +226,10 @@
         private static void SubP_dowhile()
         {
         start_dowhile:
+            // очередная очевидная проблема: второе число не может быть отрицательным и нулем - включаем параметр onlyPositives и выключаем includeZero
             Console.WriteLine("Подпрограмма do while - подпрограмма будет добавлять одно число к другому, пока оно не будет больше ста");
-            int n1 = GetUserInt("Введите число 1: ", newline: false);
-            int n2 = GetUserInt("Введите число 2: ", newline: false);
+            int n1 = GetUserIntRetrying("Введите число 1: ", newline: false);
+            int n2 = GetUserIntRetrying("Введите число 2: ", newline: false, onlyPositives: true, includeZero: false);
             if (n1 > 100)
             {
                 Console.WriteLine("Число уже больше 100, отмена...");
@@ -213,9 +251,10 @@
         private static void SubP_while()
         {
         start_while:
+            // отрицательные числа это плохая комбинация тут, запрещаем их
             Console.WriteLine("Подпрограмма while - подпрограмма будет вычитать одно число из другого пока последнее не будет меньше отнимаемого");
-            int n1 = GetUserInt("Введите число от которого программа будет отнимать: ", newline: false);
-            int n2 = GetUserInt("Введите число которое будет отниматься у первого числа: ", newline: false);
+            int n1 = GetUserIntRetrying("Введите число от которого программа будет отнимать: ", newline: false, onlyPositives: true, includeZero: false);
+            int n2 = GetUserIntRetrying("Введите число которое будет отниматься у первого числа: ", newline: false, onlyPositives: true, includeZero: false);
             if (n1 < n2)
             {
                 Console.WriteLine("Число вычитаемое больше начального, отмена...");
@@ -237,7 +276,7 @@
         static void SubP_ifelse()
         {
         start_ifelse:
-            int userin = GetUserInt("Подпрограмма if else - введите случайное число: ", newline: false);
+            int userin = GetUserIntRetrying("Подпрограмма if else - введите случайное число: ", newline: false);
             // очевидная проблема: если ввести 50, то выведет меньше, что не есть правильно
             // поставить >= не получится, и else if не использовать - программа то if else
             if (userin > 50)
