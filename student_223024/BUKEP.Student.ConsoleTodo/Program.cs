@@ -1,10 +1,10 @@
 ﻿namespace ConsoleTodo
 {
-    internal partial class Program
+    internal class Program
     {
         static List<Task> tasks = new();
         static readonly List<string> taskMenu_actions = new() { 
-            "Просмотреть список задач", "Добавить задачу"
+            "Просмотреть список задач", "Добавить задачу", "Выйти из программы"
         };
 
         /// <summary>
@@ -60,7 +60,6 @@
                     }
                 }
                 string? userin = Console.ReadLine();
-                // c code-review: стоит использовать string.IsNullOrWhiteSpace, т.к. она покрывает IsNullOrEmpty, и еще пару краевых случаев
                 if (!string.IsNullOrWhiteSpace(userin) || (canBeEmpty && userin is not null))
                 {
                     return userin;
@@ -129,7 +128,6 @@
 
         static void Main()
         {
-            taskMenu_actions.Add("Выйти из программы");
             while (true)
             {
                 Console.WriteLine("Добро пожаловать в список задач! Введите номер действия и нажмите Enter:");
