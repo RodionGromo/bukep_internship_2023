@@ -1,31 +1,27 @@
 ﻿namespace ConsoleTodo
 {
-    internal class Program
+    internal partial class Program
     {
-        // создаем структуру Task, в которой удобным образом будут храниться данные о задаче
-        struct Task
-        {
-            public string Name { get; set; }
-            public string Description { get; set; }
-        }
-
         static List<Task> tasks = new();
         static readonly List<string> taskMenu_actions = new() { 
             "Просмотреть список задач", "Добавить задачу"
         };
 
-        static int GetUserInt(string? message=null, bool addnewline=true)
+        /// <summary>
+        /// Возвращает целое число из ввода пользователя, если ввод не число то пользователь переспрашивается
+        /// </summary>
+        /// <param name="message">Сообщение которое будет отображено на экране. Параметр опциональный</param>
+        /// <param name="addNewline">Нужно ли добавлять переход строки (newline) после сообщения, сам по себе ничего не делает</param>
+        static int GetUserInt(string? message=null, bool addNewline=true)
         {
-            // функция для получения целого числа от пользователя, ошибки ввода вылавливаются с функцией int.TryParse
-            // если есть ошибка, пользователь переспрашивается
             bool succesful = false;
             int userout = -1;
             do
             {
-                // в эту функцию можно добавить вывод сообщения, параметр addnewline указывает, нужен ли переход строки, или нет
+                // в эту функцию можно добавить вывод сообщения, параметр addNewline указывает, нужен ли переход строки, или нет
                 if (message != null)
                 {
-                    if(addnewline)
+                    if(addNewline)
                     {
                         Console.WriteLine(message);
                     } else
@@ -34,7 +30,7 @@
                     }
                 }
                 string? userin = Console.ReadLine();
-                if (!string.IsNullOrEmpty(userin))
+                if (!string.IsNullOrWhiteSpace(userin))
                 {
                     succesful = int.TryParse(userin, out userout);
                 }
@@ -42,15 +38,19 @@
             return userout;
         }
 
-        static string GetUserString(string? message = null, bool addnewline = true, bool canbeempty=false)
+        /// <summary>
+        /// Возвращает строку из ввода пользователя, не может быть пустой, иначе пользователь переспрашивается
+        /// </summary>
+        /// <param name="message">Сообщение которое будет отображено на экране. Параметр опциональный</param>
+        /// <param name="addNewline">Нужно ли добавлять переход строки (newline) после сообщения, сам по себе ничего не делает</param>
+        /// <param name="canBeEmpty">Допускать пустую строку в вводе, если потребуется</param>
+        static string GetUserString(string? message = null, bool addNewline = true, bool canBeEmpty=false)
         {
-            // еще одна функция для получения информации от пользователя,
-            // на этот раз полагаюсь на string.IsNullOrEmpty, чтобы получить хороший результат
             while (true)
             {
                 if (message != null)
                 {
-                    if (addnewline)
+                    if (addNewline)
                     {
                         Console.WriteLine(message);
                     }
@@ -60,41 +60,47 @@
                     }
                 }
                 string? userin = Console.ReadLine();
-                if (!string.IsNullOrEmpty(userin))
-                {
-                    return userin;
-                }
-                if(canbeempty && userin is not null)
+                // c code-review: стоит использовать string.IsNullOrWhiteSpace, т.к. она покрывает IsNullOrEmpty, и еще пару краевых случаев
+                if (!string.IsNullOrWhiteSpace(userin) || (canBeEmpty && userin is not null))
                 {
                     return userin;
                 }
             }
         }
 
+        /// <summary>
+        /// Добавляет в список tasks новый Task, сразу спрашивая название и описание
+        /// </summary>
         static void AddTask()
         {
             tasks.Add(new() {
-                Name = GetUserString("Введите название задачи:\n> ", addnewline: false),
-                Description = GetUserString("Введите описание задачи, или нажмите Enter, чтобы пропустить:\n> ", addnewline: false, canbeempty: true),
+                Name = GetUserString("Введите название задачи:\n> ", addNewline: false),
+                Description = GetUserString("Введите описание задачи, или нажмите Enter, чтобы пропустить:\n> ", addNewline: false, canBeEmpty: true),
             });
             // оставляем пустую строчку ради ясности вывода
             Console.WriteLine();
         }
 
+        /// <summary>
+        /// Показывает задачи и форматирует вывод, учитывая есть ли задачи в списке и есть ли описание в них
+        /// </summary>
         static void ShowTasks()
         {
             if(tasks.Count == 0)
             {
                 Console.WriteLine("Нет добавленных дел\n");
+                return;
             }
             Console.WriteLine("Список текущих задач:");
             for (int i = 0; i < tasks.Count; i++)
             {
                 Console.WriteLine($"{i + 1}. {tasks[i].Name}:");
-                if (!string.IsNullOrEmpty(tasks[i].Description))
+                if (!string.IsNullOrWhiteSpace(tasks[i].Description))
                 {
                     Console.WriteLine($">\t{tasks[i].Description}");
-                } else {
+                } 
+                else 
+                {
                     Console.WriteLine(">\t * нет описания *");
                 }
                 
@@ -103,13 +109,19 @@
             }
         }
 
+        /// <summary>
+        /// Функция завершающая работу приложения, требует чтоб пользователь
+        /// ввел номер действия выхода из программы, который должен быть всегда последним в списке действий
+        /// </summary>
         static void RequestQuit()
         {
             Console.WriteLine("Вы действительно хотите выйти из приложения?\nВведите номер этого действия для выхода:");
-            int userout = GetUserInt("> ", addnewline: false);
-            if (userout == taskMenu_actions.Count) {
+            int userout = GetUserInt("> ", addNewline: false);
+            if (userout == taskMenu_actions.Count) 
+            {
                 Environment.Exit(0);
-            } else
+            } 
+            else
             {
                 Console.WriteLine("Неверно! Возвращаю в меню..\n");
             }
@@ -125,7 +137,7 @@
                 {
                     Console.WriteLine($"{i + 1}. {taskMenu_actions[i]}");
                 }
-                switch (GetUserInt("> ", addnewline: false))
+                switch (GetUserInt("> ", addNewline: false))
                 {
                     case 1:
                         ShowTasks(); break;
