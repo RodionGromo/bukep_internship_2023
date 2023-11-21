@@ -29,6 +29,7 @@
  5. Добавить файл "git_bash_commands.md" и вписать туда отчет.
 
 `toch git_bash_commands.md -> vim git_bash_commands.md  -> INSERT -> esc -> :wq`
+***
 
  6. Выполнить синхронизацию.
 
