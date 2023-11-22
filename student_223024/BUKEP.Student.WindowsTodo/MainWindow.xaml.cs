@@ -18,6 +18,9 @@ namespace BUKEP.Student.WindowsTodo
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Создает диалоговое окно для подтверждения удаления задачи
+        /// </summary>
         private void RemoveItem_Click(object sender, RoutedEventArgs e)
         {
             RemoveModal removeModal = new(sender);
@@ -40,7 +43,7 @@ namespace BUKEP.Student.WindowsTodo
         private void AddTaskButton_Click(object sender, RoutedEventArgs e)
         {
             AddTaskWindow win2 = new();
-            win2.Show();
+            win2.ShowDialog();
         }
     }
 }

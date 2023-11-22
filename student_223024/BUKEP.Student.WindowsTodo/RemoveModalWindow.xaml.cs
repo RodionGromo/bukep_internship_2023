@@ -14,6 +14,11 @@ namespace BUKEP.Student.WindowsTodo
         readonly MainWindow mainWindow = ((MainWindow)Application.Current.MainWindow);
         private readonly TaskItem itemToDelete;
 
+        /// <summary>
+        /// Инициализатор, аргумент sender должен быть передан с event'а кнопки в ListView, иначе кидает ошибку если аргумент равен null
+        /// </summary>
+        /// <param name="sender">аргумент sender из event'а кнопки находящейся в ListView</param>
+        /// <exception cref="ArgumentException"></exception>
         public RemoveModal(object? sender)
         {
             if(sender == null)
