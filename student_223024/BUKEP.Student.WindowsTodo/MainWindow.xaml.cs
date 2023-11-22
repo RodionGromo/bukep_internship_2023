@@ -20,12 +20,9 @@ namespace BUKEP.Student.WindowsTodo
 
         private void RemoveItem_Click(object sender, RoutedEventArgs e)
         {
-            TaskItem? data = ((Button)sender).DataContext as TaskItem;
-            if (data != null)
-            {
-                TaskList.Remove(data);
-                RefreshViewList();
-            }
+            RemoveModal removeModal = new(sender);
+            removeModal.ShowDialog();
+            RefreshViewList();
         }
 
         /// <summary>
