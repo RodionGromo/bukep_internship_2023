@@ -12,7 +12,8 @@ namespace BUKEP.Student.WindowsTodo
         public string Name { get; set;}
         public string Description { get; set; }
 
-        public TaskItem(string name, string description) {
+        public TaskItem(string name, string description) 
+        {
             Name = name;
             Description = description;
         }

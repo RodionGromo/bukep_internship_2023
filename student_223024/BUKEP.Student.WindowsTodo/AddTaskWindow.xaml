@@ -5,8 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BUKEP.Student.WindowsTodo"
         mc:Ignorable="d"
-        Title="AddTaskWindow" Height="450" Width="800">
+        Title="Новая задача" Height="210" Width="400">
     <Grid>
-        
+        <Label Content="Заголовок задачи:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Width="110"/>
+        <TextBox x:Name="TaskNameInput" TextWrapping="Wrap" VerticalAlignment="Top" Margin="10,26,10,0" GotFocus="RemoveTextTemplate_Name" LostFocus="AddTextTemplate_Name" Text="Введите заголовок задачи..."/>
+        <Label Content="Описание задачи:" HorizontalAlignment="Left" Margin="10,44,0,0" VerticalAlignment="Top" Width="110"/>
+        <TextBox x:Name="TaskDescriptionInput" TextWrapping="Wrap" VerticalAlignment="Top" Margin="10,70,10,0" Height="70" GotFocus="RemoveTextTemplate_Description" LostFocus="AddTextTemplate_Description" Text="Введите описание задачи..."/>
+        <Button Content="Сохранить" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,145,10,0" Height="20" Width="70" Click="SaveTask_Button"/>
+        <Button Content="Отмена" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,145,85,0" Height="20" Width="70" Click="ExitWindow_Button"/>
     </Grid>
 </Window>
