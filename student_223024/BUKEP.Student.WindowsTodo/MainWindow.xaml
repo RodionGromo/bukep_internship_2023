@@ -7,15 +7,23 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <ListView x:Name="TaskViewList" Margin="0,40,0,0" Grid.Row="2">
+        <ListView Margin="0,40,0,0" x:Name="TaskViewList">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Задача"/>
-                    <GridViewColumn Header="Описание"/>
-                    <GridViewColumn Header="Кнопка типо" Width="Auto"/>
+                    <GridViewColumn Header="Задача" DisplayMemberBinding="{Binding Path=Name}"/>
+                    <GridViewColumn Header="Описание" DisplayMemberBinding="{Binding Path=Description}"/>
+                    <GridViewColumn Header="Кнопка">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <Button x:Name="RemoveItem" Content="Удалить" Background="LightGray" BorderBrush="Gray" Click="RemoveItem_Click"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="Добавить задачу" HorizontalAlignment="Left" Margin="15,10,0,0" VerticalAlignment="Top" Width="100"/>
+        <Button x:Name="AddTaskButton" Content="Добавить задачу" HorizontalAlignment="Left" Margin="15,10,0,0" VerticalAlignment="Top" Width="100" Click="AddTaskButton_Click"/>
     </Grid>
 </Window>
