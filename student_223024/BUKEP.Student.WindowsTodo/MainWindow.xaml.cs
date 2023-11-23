@@ -21,7 +21,8 @@ namespace BUKEP.Student.WindowsTodo
         /// </summary>
         private void RemoveItem_Click(object sender, RoutedEventArgs e)
         {
-            RemoveModal removeModal = new(sender);
+            TaskItem item = (TaskItem)((Button)sender).DataContext;
+            RemoveModal removeModal = new(item);
             removeModal.ShowDialog();
             RefreshViewList();
         }
@@ -32,7 +33,10 @@ namespace BUKEP.Student.WindowsTodo
         public void RefreshViewList()
         {
             TaskViewList.Items.Clear();
-            TaskViewList.Items.Add(TaskList);
+            foreach(TaskItem item in TaskList)
+            {
+                TaskViewList.Items.Add(item);
+            }
         }
 
         private void AddTaskButton_Click(object sender, RoutedEventArgs e)

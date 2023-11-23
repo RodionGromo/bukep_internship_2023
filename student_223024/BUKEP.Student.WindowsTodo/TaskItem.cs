@@ -8,13 +8,13 @@ namespace BUKEP.Student.WindowsTodo
 	/// </summary>
     public class TaskItem
     {
-    	/// <summary>
-    	/// Название задачи
-    	/// </summary>
-        public string Name { get; set;}
+        /// <summary>
+        /// Название задачи
+        /// </summary>
+        public string? Name { get; set;}
         /// <summary>
         /// Описание задачи
         /// </summary>
-        public string Description { get; set; }
+        public string? Description { get; set; }
     }
 }

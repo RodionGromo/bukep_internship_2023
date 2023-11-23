@@ -11,7 +11,7 @@ namespace BUKEP.Student.WindowsTodo
     /// </summary>
     public partial class RemoveModal : Window
     {
-        const MainWindow mainWindow = ((MainWindow)Application.Current.MainWindow);
+        private MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
         private TaskItem itemToDelete;
 
         /// <summary>
