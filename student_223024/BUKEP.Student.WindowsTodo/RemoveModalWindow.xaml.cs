@@ -11,21 +11,15 @@ namespace BUKEP.Student.WindowsTodo
     /// </summary>
     public partial class RemoveModal : Window
     {
-        readonly MainWindow mainWindow = ((MainWindow)Application.Current.MainWindow);
-        private readonly TaskItem itemToDelete;
+        const MainWindow mainWindow = ((MainWindow)Application.Current.MainWindow);
+        private TaskItem itemToDelete;
 
         /// <summary>
-        /// Инициализатор, аргумент sender должен быть передан с event'а кнопки в ListView, иначе кидает ошибку если аргумент равен null
+        /// Инициализатор, аргумент item должен быть типом TaskItem из списка TaskList
         /// </summary>
-        /// <param name="sender">аргумент sender из event'а кнопки находящейся в ListView</param>
-        /// <exception cref="ArgumentException"></exception>
-        public RemoveModal(object? sender)
+        public RemoveModal(TaskItem item)
         {
-            if(sender == null)
-            {
-                throw new ArgumentException("sender is null");
-            }
-            itemToDelete = (TaskItem)((Button)sender).DataContext;
+            itemToDelete = item;
             InitializeComponent();
         }
 

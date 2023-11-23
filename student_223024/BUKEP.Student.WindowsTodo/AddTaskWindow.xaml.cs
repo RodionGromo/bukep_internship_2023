@@ -7,10 +7,9 @@ namespace BUKEP.Student.WindowsTodo
     /// </summary>
     public partial class AddTaskWindow : Window
     {
-        readonly MainWindow MainWindow = ((MainWindow)Application.Current.MainWindow);
-
-        readonly string enterTitleTemplate = "Введите заголовок задачи...";
-        readonly string enterDescriptionTemplate = "Введите описание задачи...";
+        const MainWindow MainWindow = ((MainWindow)Application.Current.MainWindow);
+        const string enterTitleTemplate = "Введите заголовок задачи...";
+        const string enterDescriptionTemplate = "Введите описание задачи...";
 
         public AddTaskWindow()
         {

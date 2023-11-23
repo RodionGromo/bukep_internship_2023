@@ -1,21 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 
 namespace BUKEP.Student.WindowsTodo
 {
+	/// <summary>
+	/// Класс TaskItem, содержит в себе название задачи Name и её описание Description
+	/// </summary>
     public class TaskItem
     {
+    	/// <summary>
+    	/// Название задачи
+    	/// </summary>
         public string Name { get; set;}
+        /// <summary>
+        /// Описание задачи
+        /// </summary>
         public string Description { get; set; }
-
-        public TaskItem(string name, string description) 
-        {
-            Name = name;
-            Description = description;
-        }
     }
 }

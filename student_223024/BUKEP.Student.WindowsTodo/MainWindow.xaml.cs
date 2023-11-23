@@ -9,9 +9,7 @@ namespace BUKEP.Student.WindowsTodo
     /// </summary>
     public partial class MainWindow : Window
     {
-        public List<TaskItem> TaskList = new()
-        {
-        };
+    	public List<TaskItem> TaskList = new();
 
         public MainWindow()
         {
@@ -34,10 +32,7 @@ namespace BUKEP.Student.WindowsTodo
         public void RefreshViewList()
         {
             TaskViewList.Items.Clear();
-            foreach (var item in TaskList)
-            {
-                TaskViewList.Items.Add(item);
-            }
+            TaskViewList.Items.Add(TaskList);
         }
 
         private void AddTaskButton_Click(object sender, RoutedEventArgs e)

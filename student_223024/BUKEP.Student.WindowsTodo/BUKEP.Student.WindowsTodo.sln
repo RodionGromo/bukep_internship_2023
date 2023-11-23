@@ -1,9 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
+# Visual Studio 2012
+# SharpDevelop 5.0
 VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BUKEP.Student.WindowsTodo", "BUKEP.Student.WindowsTodo.csproj", "{7C694486-8618-41D5-92BB-0A4B434AF712}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "test", "..\..\..\test\test.csproj", "{9D14D93C-B1E3-4147-ADFB-800CCEE1D9A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +18,10 @@ Global
 		{7C694486-8618-41D5-92BB-0A4B434AF712}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C694486-8618-41D5-92BB-0A4B434AF712}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C694486-8618-41D5-92BB-0A4B434AF712}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D14D93C-B1E3-4147-ADFB-800CCEE1D9A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D14D93C-B1E3-4147-ADFB-800CCEE1D9A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D14D93C-B1E3-4147-ADFB-800CCEE1D9A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D14D93C-B1E3-4147-ADFB-800CCEE1D9A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
