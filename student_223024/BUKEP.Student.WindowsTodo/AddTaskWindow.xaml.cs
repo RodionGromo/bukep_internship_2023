@@ -53,12 +53,10 @@ namespace BUKEP.Student.WindowsTodo
         /// </summary>
         private void SaveTask_Button(object sender, RoutedEventArgs e)
         {
-            if(TaskNameInput.Text.Equals(enterTitleTemplate))
-            {
-                return;
-            }
-            string actualDescription = TaskDescriptionInput.Text.Equals(enterDescriptionTemplate) ? "" : TaskDescriptionInput.Text;
-            MainWindow.TaskList.Add(new() { Name = TaskNameInput.Text, Description = actualDescription });
+            if(TaskNameInput.Text.Equals(enterTitleTemplate)) return;
+
+            string actualDescription = TaskDescriptionInput.Text.Equals(enterDescriptionTemplate) ? string.Empty : TaskDescriptionInput.Text;
+            MainWindow.taskMan.AddTask(TaskNameInput.Text, actualDescription);
             MainWindow.RefreshViewList();
             Close();
         }

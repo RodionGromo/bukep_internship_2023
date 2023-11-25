@@ -27,7 +27,7 @@ namespace BUKEP.Student.WindowsTodo
         {
             if (itemToDelete != null)
             {
-                mainWindow.TaskList.Remove(itemToDelete);
+                mainWindow.taskMan.RemoveTask(itemToDelete);
             }
             Close();
         }

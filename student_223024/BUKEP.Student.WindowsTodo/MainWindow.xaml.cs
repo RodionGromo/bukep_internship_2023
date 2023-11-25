@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -9,7 +9,7 @@ namespace BUKEP.Student.WindowsTodo
     /// </summary>
     public partial class MainWindow : Window
     {
-    	public List<TaskItem> TaskList = new();
+        public TaskManager taskMan = new();
 
         public MainWindow()
         {
@@ -33,7 +33,7 @@ namespace BUKEP.Student.WindowsTodo
         public void RefreshViewList()
         {
             TaskViewList.Items.Clear();
-            foreach(TaskItem item in TaskList)
+            foreach(TaskItem item in taskMan.GetTasks())
             {
                 TaskViewList.Items.Add(item);
             }
