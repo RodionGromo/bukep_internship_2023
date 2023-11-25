@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Windows.Documents;
 
 namespace BUKEP.Student.WindowsTodo
 {
@@ -18,7 +19,7 @@ namespace BUKEP.Student.WindowsTodo
         /// <param name="item">Элемент, который нужно добавить</param>
         public void AddTask(TaskItem item)
         {
-            if (!TaskList.Contains(item))
+            if (!ContainsTask(item))
             {
                 TaskList.Add(item);
             }
@@ -30,11 +31,8 @@ namespace BUKEP.Student.WindowsTodo
         /// <param name="name">Название задачи</param>
         public void AddTask(string name) 
         {
-            TaskItem item = new() { Name = name };
-            if (!TaskList.Contains(item))
-            {
-                TaskList.Add(item);
-            }
+            TaskItem item = new() { Name = name.Trim() };
+            AddTask(item);
         }
 
         /// <summary>
@@ -44,11 +42,8 @@ namespace BUKEP.Student.WindowsTodo
         /// <param name="description">Описание задачи</param>
         public void AddTask(string name, string description)
         {
-            TaskItem item = new() { Name = name, Description = description};
-            if (!TaskList.Contains(item))
-            {
-                TaskList.Add(item);
-            }
+            TaskItem item = new() { Name = name.Trim(), Description = description.Trim()};
+            AddTask(item);
         }
 
         /// <summary>
@@ -58,6 +53,34 @@ namespace BUKEP.Student.WindowsTodo
         public void RemoveTask(TaskItem item)
         {
             TaskList.Remove(item);
+        }
+
+        /// <summary>
+        /// <para>Ищет task в списке задач, и возвращает true, если такой есть</para>
+        /// <para>Пояснение - List.Contains не сравнивает значения внутри элементов, а только их ссылки, поэтому эта функция нужна</para>
+        /// </summary>
+        /// <param name="task">Задача, которую нужно найти</param>
+        /// <returns>true если такой task существует, иначе false</returns>
+        public bool ContainsTask(TaskItem task)
+        {
+            foreach (TaskItem item in TaskList)
+            {
+                if (item.Name.Equals(task.Name))
+                {
+                    if(item.Description != null && task.Description != null)
+                    {
+                        if (task.Description.Equals(item.Description)) {
+                            return true;
+                        }
+                    } 
+                    else
+                    {
+                        return true;
+                    }
+                    
+                }
+            }
+            return false;
         }
 
         /// <summary>
