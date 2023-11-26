@@ -13,36 +13,17 @@ namespace BUKEP.Student.WindowsTodo
         private List<TaskItem> TaskList = new();
 
         /// <summary>
-        /// Добавляет в список элемент item, если такой не существует
-        /// </summary>
-        /// <param name="item">Элемент, который нужно добавить</param>
-        public void AddTask(TaskItem item)
-        {
-            if (!ContainsTask(item))
-            {
-                TaskList.Add(item);
-            }
-        }
-
-        /// <summary>
-        /// Создает и добавляет в список задачу, используя только название
-        /// </summary>
-        /// <param name="name">Название задачи</param>
-        public void AddTask(string name) 
-        {
-            TaskItem item = new() { Name = name.Trim() };
-            AddTask(item);
-        }
-
-        /// <summary>
         /// Создает и добавляет в список задачу, используя название + описание
         /// </summary>
         /// <param name="name">Название задачи</param>
         /// <param name="description">Описание задачи</param>
         public void AddTask(string name, string description)
         {
-            TaskItem item = new() { Name = name.Trim(), Description = description.Trim()};
-            AddTask(item);
+            TaskItem item = new() { Name = name.Trim(), Description = description.Trim() };
+            if (!ContainsTask(item))
+            {
+                TaskList.Add(item);
+            }
         }
 
         /// <summary>
@@ -60,7 +41,7 @@ namespace BUKEP.Student.WindowsTodo
         /// </summary>
         /// <param name="task">Задача, которую нужно найти</param>
         /// <returns>true если такой task существует, иначе false</returns>
-        public bool ContainsTask(TaskItem task)
+        private bool ContainsTask(TaskItem task)
         {
             foreach (TaskItem item in TaskList)
             {
@@ -76,7 +57,6 @@ namespace BUKEP.Student.WindowsTodo
                     {
                         return true;
                     }
-                    
                 }
             }
             return false;
