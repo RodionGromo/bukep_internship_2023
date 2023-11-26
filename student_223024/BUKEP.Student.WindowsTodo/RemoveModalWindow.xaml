@@ -1,0 +1,15 @@
+﻿<Window x:Class="BUKEP.Student.WindowsTodo.RemoveModal"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BUKEP.Student.WindowsTodo"
+        mc:Ignorable="d"
+        Title="RemoveModal" Height="175" Width="315">
+    <Grid>
+        <Label Content="Вы действительно хотите удалить задачу? &#xD;&#xA;Если да, то нажмите кнопку &quot;Удалить&quot;, иначе&#xD;&#xA;нажмите &quot;Отмена&quot;" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Height="59" Width="280"/>
+        <Button Content="Удалить" HorizontalAlignment="Left" Margin="230,94,0,0" VerticalAlignment="Top" Height="30" Width="60" Click="AcceptRemoval"/>
+        <Button Content="Отмена" HorizontalAlignment="Left" Margin="165,94,0,0" VerticalAlignment="Top" Height="30" Width="60" Click="DenyRemoval"/>
+
+    </Grid>
+</Window>

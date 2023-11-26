@@ -1,0 +1,28 @@
+﻿<Window x:Class="BUKEP.Student.WindowsTodo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Todo" Height="450" Width="800">
+    <Grid>
+        <ListView Margin="0,40,0,0" x:Name="TaskViewList">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Задача" DisplayMemberBinding="{Binding Path=Name}" Width="200"/>
+                    <GridViewColumn Header="Описание" DisplayMemberBinding="{Binding Path=Description}" Width="500"/>
+                    <GridViewColumn Width="74">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel HorizontalAlignment="Center">
+                                    <Button x:Name="RemoveItem" Content="Удалить" Background="LightGray" BorderBrush="Gray" Click="RemoveItem_Click"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button x:Name="AddTaskButton" Content="Добавить задачу" HorizontalAlignment="Left" Margin="15,10,0,0" VerticalAlignment="Top" Width="100" Click="AddTaskButton_Click"/>
+    </Grid>
+</Window>
