@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using BUKEP.Student.Todo;
+using System.Windows;
 
 namespace BUKEP.Student.WindowsTodo
 {
@@ -7,12 +8,15 @@ namespace BUKEP.Student.WindowsTodo
     /// </summary>
     public partial class AddTaskWindow : Window
     {
-        MainWindow MainWindow = (MainWindow)Application.Current.MainWindow;
+        MainWindow mainWindow;
+        ITaskManager taskMan;
         const string enterTitleTemplate = "Введите заголовок задачи...";
         const string enterDescriptionTemplate = "Введите описание задачи...";
 
-        public AddTaskWindow()
+        public AddTaskWindow(MainWindow mw, ITaskManager tm)
         {
+            mainWindow = mw;
+            taskMan = tm;
             InitializeComponent();
         }
 
@@ -59,8 +63,8 @@ namespace BUKEP.Student.WindowsTodo
             };
 
             string actualDescription = TaskDescriptionInput.Text.Equals(enterDescriptionTemplate) ? string.Empty : TaskDescriptionInput.Text;
-            MainWindow.taskMan.AddTask(TaskNameInput.Text, actualDescription);
-            MainWindow.RefreshViewList();
+            taskMan.AddTask(TaskNameInput.Text, actualDescription);
+            mainWindow.RefreshViewList();
             Close();
         }
 

@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
-
-namespace BUKEP.Student.WindowsTodo
+﻿namespace BUKEP.Student.Todo
 {
     /// <summary>
     /// Класс TaskManager, перекрывает стандартный доступ к списку задач, заменяя его вспомогательными функциями
     /// </summary>
-    public class TaskManager
+    public class TaskManager : ITaskManager
     {
         /// <summary>
         /// Список задач

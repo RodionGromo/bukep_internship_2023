@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using BUKEP.Student.Todo;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace BUKEP.Student.WindowsTodo
@@ -8,7 +9,7 @@ namespace BUKEP.Student.WindowsTodo
     /// </summary>
     public partial class MainWindow : Window
     {
-        public TaskManager taskMan = new();
+        public ITaskManager taskMan = new TaskManager();
 
         public MainWindow()
         {
@@ -21,7 +22,7 @@ namespace BUKEP.Student.WindowsTodo
         private void RemoveItem_Click(object sender, RoutedEventArgs e)
         {
             TaskItem item = (TaskItem)((Button)sender).DataContext;
-            RemoveModal removeModal = new(item);
+            RemoveModal removeModal = new(item, taskMan);
             removeModal.ShowDialog();
             RefreshViewList();
         }
@@ -40,7 +41,7 @@ namespace BUKEP.Student.WindowsTodo
 
         private void AddTaskButton_Click(object sender, RoutedEventArgs e)
         {
-            AddTaskWindow win2 = new();
+            AddTaskWindow win2 = new(this, taskMan);
             win2.ShowDialog();
         }
     }
