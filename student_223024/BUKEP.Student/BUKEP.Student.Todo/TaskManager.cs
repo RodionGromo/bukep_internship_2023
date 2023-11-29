@@ -10,11 +10,7 @@
         /// </summary>
         private List<TaskItem> TaskList = new();
 
-        /// <summary>
-        /// Создает и добавляет в список задачу, используя название + описание
-        /// </summary>
-        /// <param name="name">Название задачи</param>
-        /// <param name="description">Описание задачи</param>
+        /// <inheritdoc/>
         public void AddTask(string name, string description)
         {
             TaskItem item = new() { Name = name.Trim(), Description = description.Trim() };
@@ -24,10 +20,7 @@
             }
         }
 
-        /// <summary>
-        /// Удаляет из списка элемент
-        /// </summary>
-        /// <param name="item">Элемент, который нужно удалить</param>
+        /// <inheritdoc/>
         public void RemoveTask(TaskItem item)
         {
             TaskList.Remove(item);
@@ -60,9 +53,7 @@
             return false;
         }
 
-        /// <summary>
-        /// Копирует и возвращает список задач
-        /// </summary>
+        /// <inheritdoc/>
         public List<TaskItem> GetTasks()
         {
             return new(TaskList);

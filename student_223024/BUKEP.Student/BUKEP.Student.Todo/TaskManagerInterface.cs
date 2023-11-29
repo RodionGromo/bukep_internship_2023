@@ -1,5 +1,8 @@
 ﻿namespace BUKEP.Student.Todo
 {
+    /// <summary>
+    /// Интерфейс ITaskManager, перекрывает стандартный доступ к списку задач, заменяя его вспомогательными функциями
+    /// </summary>
     public interface ITaskManager
     {
         /// <summary>
