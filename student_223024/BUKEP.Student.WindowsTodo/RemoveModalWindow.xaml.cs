@@ -9,12 +9,12 @@ namespace BUKEP.Student.WindowsTodo
     public partial class RemoveModal : Window
     {
         private ITaskManager taskManager;
-        private TaskItem itemToDelete;
+        private Task itemToDelete;
 
         /// <summary>
         /// Инициализатор, аргумент item должен быть типом TaskItem из списка TaskList
         /// </summary>
-        public RemoveModal(TaskItem item, ITaskManager taskManager)
+        public RemoveModal(Task item, ITaskManager taskManager)
         {
             this.taskManager = taskManager;
             itemToDelete = item;

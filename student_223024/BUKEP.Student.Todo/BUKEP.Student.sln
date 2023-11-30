@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BUKEP.Student.WindowsTodo",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BUKEP.Student.ConsoleTodo", "..\BUKEP.Student.ConsoleTodo\BUKEP.Student.ConsoleTodo.csproj", "{A6B56477-E094-40A2-ABD5-BD5CC884CB2E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BUKEP.Student.Todo", "BUKEP.Student.Todo\BUKEP.Student.Todo.csproj", "{5D0BA016-01C2-48D5-9433-5D9551F77A8A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BUKEP.Student.Todo", "BUKEP.Student.Todo\BUKEP.Student.Todo.csproj", "{5D0BA016-01C2-48D5-9433-5D9551F77A8A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

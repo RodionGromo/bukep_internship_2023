@@ -1,29 +1,27 @@
 ﻿namespace BUKEP.Student.Todo
 {
     /// <summary>
-    /// Класс TaskManager, перекрывает стандартный доступ к списку задач, заменяя его вспомогательными функциями
+    /// Класс для доступа к списку задач
     /// </summary>
     public class TaskManager : ITaskManager
     {
-        /// <summary>
-        /// Список задач
-        /// </summary>
-        private List<TaskItem> TaskList = new();
+        // Список задач
+        private List<Task> _taskList = new();
 
         /// <inheritdoc/>
         public void AddTask(string name, string description)
         {
-            TaskItem item = new() { Name = name.Trim(), Description = description.Trim() };
+            Task item = new() { Name = name.Trim(), Description = description.Trim() };
             if (!ContainsTask(item))
             {
-                TaskList.Add(item);
+                _taskList.Add(item);
             }
         }
 
         /// <inheritdoc/>
-        public void RemoveTask(TaskItem item)
+        public void RemoveTask(Task item)
         {
-            TaskList.Remove(item);
+            _taskList.Remove(item);
         }
 
         /// <summary>
@@ -32,9 +30,9 @@
         /// </summary>
         /// <param name="task">Задача, которую нужно найти</param>
         /// <returns>true если такой task существует, иначе false</returns>
-        private bool ContainsTask(TaskItem task)
+        private bool ContainsTask(Task task)
         {
-            foreach (TaskItem item in TaskList)
+            foreach (Task item in _taskList)
             {
                 if (item.Name.Equals(task.Name))
                 {
@@ -54,9 +52,12 @@
         }
 
         /// <inheritdoc/>
-        public List<TaskItem> GetTasks()
+        public IEnumerable<Task> GetTasks()
         {
-            return new(TaskList);
+            foreach(var task in _taskList)
+            {
+                yield return task;
+            }
         }
     }
 }

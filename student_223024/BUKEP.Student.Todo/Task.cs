@@ -3,7 +3,7 @@
 	/// <summary>
 	/// Класс TaskItem, содержит в себе название задачи Name и её описание Description
 	/// </summary>
-    public class TaskItem
+    public class Task
     {
         /// <summary>
         /// Название задачи

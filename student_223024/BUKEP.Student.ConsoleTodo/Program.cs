@@ -87,7 +87,7 @@ namespace ConsoleTodo
         /// </summary>
         static void ShowTasks()
         {
-            List<TaskItem> tasks = taskMan.GetTasks();
+            List<BUKEP.Student.Todo.Task> tasks = taskMan.GetTasks();
             if (tasks.Count == 0)
             {
                 Console.WriteLine("Нет добавленных дел\n");
