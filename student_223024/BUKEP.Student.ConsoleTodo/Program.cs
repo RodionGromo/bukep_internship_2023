@@ -1,8 +1,10 @@
-﻿namespace ConsoleTodo
+﻿using BUKEP.Student.Todo;
+
+namespace ConsoleTodo
 {
     internal class Program
     {
-        static List<Task> tasks = new();
+        static ITaskManager taskMan = new TaskManager();
         static readonly List<string> taskMenu_actions = new() { 
             "Просмотреть список задач", "Добавить задачу", "Выйти из программы"
         };
@@ -72,10 +74,10 @@
         /// </summary>
         static void AddTask()
         {
-            tasks.Add(new() {
-                Name = GetUserString("Введите название задачи:\n> ", addNewline: false),
-                Description = GetUserString("Введите описание задачи, или нажмите Enter, чтобы пропустить:\n> ", addNewline: false, canBeEmpty: true),
-            });
+            taskMan.AddTask(
+                GetUserString("Введите название задачи:\n> ", addNewline: false),
+                GetUserString("Введите описание задачи, или нажмите Enter, чтобы пропустить:\n> ", addNewline: false, canBeEmpty: true)
+            );
             // оставляем пустую строчку ради ясности вывода
             Console.WriteLine();
         }
@@ -85,7 +87,8 @@
         /// </summary>
         static void ShowTasks()
         {
-            if(tasks.Count == 0)
+            List<BUKEP.Student.Todo.Task> tasks = taskMan.GetTasks();
+            if (tasks.Count == 0)
             {
                 Console.WriteLine("Нет добавленных дел\n");
                 return;

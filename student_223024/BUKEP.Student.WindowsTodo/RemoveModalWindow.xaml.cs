@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using BUKEP.Student.Todo;
+using System.Windows;
 
 namespace BUKEP.Student.WindowsTodo
 {
@@ -7,14 +8,15 @@ namespace BUKEP.Student.WindowsTodo
     /// </summary>
     public partial class RemoveModal : Window
     {
-        private MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
-        private TaskItem itemToDelete;
+        private ITaskManager taskManager;
+        private Task itemToDelete;
 
         /// <summary>
         /// Инициализатор, аргумент item должен быть типом TaskItem из списка TaskList
         /// </summary>
-        public RemoveModal(TaskItem item)
+        public RemoveModal(Task item, ITaskManager taskManager)
         {
+            this.taskManager = taskManager;
             itemToDelete = item;
             InitializeComponent();
         }
@@ -23,7 +25,7 @@ namespace BUKEP.Student.WindowsTodo
         {
             if (itemToDelete != null)
             {
-                mainWindow.taskMan.RemoveTask(itemToDelete);
+                taskManager.RemoveTask(itemToDelete);
             }
             Close();
         }

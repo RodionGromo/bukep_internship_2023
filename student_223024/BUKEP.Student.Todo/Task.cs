@@ -1,14 +1,14 @@
-﻿namespace BUKEP.Student.WindowsTodo
+﻿namespace BUKEP.Student.Todo
 {
 	/// <summary>
 	/// Класс TaskItem, содержит в себе название задачи Name и её описание Description
 	/// </summary>
-    public class TaskItem
+    public class Task
     {
         /// <summary>
         /// Название задачи
         /// </summary>
-        public required string Name { get; set;}
+        public required string Name { get; set; }
         /// <summary>
         /// Описание задачи
         /// </summary>
