@@ -1,0 +1,31 @@
+﻿@page
+@model BUKEP.Student.WebFormsTodo.Pages.ConfirmDeleteModel
+@{
+	ViewData["Title"] = "Delete";
+}
+
+<style>
+	button.red {
+		background: rgb(255,38,38);
+	}
+
+	div.right-align {
+		display: flex;
+		justify-content: flex-end;
+		gap: 5px;
+	}
+</style>
+
+<div class="main-page">
+	<h2>Удаление задачи</h2>
+	<p>Вы действительно хотите удалить задачу @Model.taskName? Если да, нажмите кнопку "Удалить", иначе нажмите "Отмена"</p>
+	<div class="right-align">
+		<form asp-page-handler="CancelDeletion" method="post">
+			<button>Отмена</button>
+		</form>
+		<form asp-page-handler="ConfirmDeletion" asp-route-name="@Model.taskName" asp-route-descr="@Model.taskDescription" method="post">
+			<button class="red">Удалить</button>
+		</form>
+		
+	</div>
+</div>
