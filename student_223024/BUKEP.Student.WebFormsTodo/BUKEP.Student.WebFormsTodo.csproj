@@ -153,6 +153,7 @@
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="Todo.aspx" />
+    <Content Include="Deletion.aspx" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -242,6 +243,13 @@
     </Compile>
     <Compile Include="Todo.aspx.designer.cs">
       <DependentUpon>Todo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Deletion.aspx.cs">
+      <DependentUpon>Deletion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Deletion.aspx.designer.cs">
+      <DependentUpon>Deletion.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

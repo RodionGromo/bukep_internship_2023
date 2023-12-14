@@ -19,6 +19,20 @@
 		void RemoveTask(Task task);
 
 		/// <summary>
+		/// Удаляет задачу из списка по её индексу
+		/// </summary>
+		/// <param name="taskIndex">Индекс задачи, которую нужно удалить</param>
+		void RemoveTask(int taskIndex);
+
+		/// <summary>
+		/// <para>Ищет task в списке задач, и возвращает true, если такой есть</para>
+		/// <para>Пояснение - List.Contains не сравнивает значения внутри элементов, а только их ссылки, поэтому эта функция нужна</para>
+		/// </summary>
+		/// <param name="task">Задача, которую нужно найти</param>
+		/// <returns>true если такой task существует, иначе false</returns>
+		bool ContainsTask(Task task);
+
+		/// <summary>
 		/// Возвращает итератор списка задач
 		/// </summary>
 		IEnumerable<Task> GetTasks();

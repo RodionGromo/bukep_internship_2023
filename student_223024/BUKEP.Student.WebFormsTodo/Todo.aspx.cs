@@ -1,6 +1,9 @@
 ﻿using BUKEP.Student.Todo;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web.UI.WebControls;
 
 namespace BUKEP.Student.WebFormsTodo
@@ -17,29 +20,19 @@ namespace BUKEP.Student.WebFormsTodo
 			Session["UserInfo"] = userdata;
 		}
 
-		protected void NewTaskButton_Click(object sender, EventArgs e)
+		private void RegenerateTaskTable(UserState userState)
 		{
-			EditUserStateDirectly((UserState us) =>
-			{
-				us.IsInEditMode = !us.IsInEditMode;
-				return us;
-			});
-		}
+			ITaskManager taskManager = userState.UserTaskManager;
+			IEnumerable<Task> tasks = taskManager.GetTasks();
 
-		protected void Page_Load(object sender, EventArgs e)
-		{
-			if (Session["UserInfo"] == null) {
-				Session["UserInfo"] = new UserState() { UserTaskManager = new TaskManager() };
+			for (int i = 1; i < TaskTable.Rows.Count;i++) { 
+				TaskTable.Rows.RemoveAt(i);
 			}
-			UserState userInfo = Session["UserInfo"] as UserState;
-			ITaskManager taskManager = userInfo.UserTaskManager;
-
-			EditPanel.Visible = userInfo.IsInEditMode;
-
+			
 			// создание таблицы задач по данным сессии пользователя
-			for (int i = 0; i < taskManager.GetTasks().Count(); i++)
+			for (int i = 0; i < tasks.Count(); i++)
 			{
-				Task task = taskManager.GetTasks().ToList()[i];
+				Task task = tasks.ToList()[i];
 
 				TableRow tr = new TableRow();
 
@@ -60,7 +53,7 @@ namespace BUKEP.Student.WebFormsTodo
 					CommandName = "deleteTask",
 					CommandArgument = i + "",
 					Text = "Удалить",
-					CssClass = "btn btn-danger"
+					CssClass = "btn btn-danger",
 				};
 
 				Button editButton = new Button
@@ -83,21 +76,39 @@ namespace BUKEP.Student.WebFormsTodo
 			}
 		}
 
+		protected void NewTaskButton_Click(object sender, EventArgs e)
+		{
+			EditPanel.Visible = !EditPanel.Visible;
+			if(Session["UserInfo"] is UserState us)
+			{
+				RegenerateTaskTable(us);
+			}
+			
+		}
+
+		protected void Page_Load(object sender, EventArgs e)
+		{
+			if (Session["UserInfo"] == null) {
+				Session["UserInfo"] = new UserState() { UserTaskManager = new TaskManager() };
+			}
+		}
+
 		protected void EditButton_Click(object sender, EventArgs e)
 		{
 			Button btn = sender as Button;
-			Task taskToEdit = null;
 			EditUserStateDirectly((us) =>
 			{
 				int.TryParse(btn.CommandArgument, out int taskIndex);
 				Task taskToCopy = us.UserTaskManager.GetTasks().ElementAt(taskIndex);
-				taskToEdit = taskToCopy;
 				us.EditingTask = taskToCopy;
 				us.IsInEditMode = true;
+
+				taskNameEntry.Text = taskToCopy.Name;
+				taskDescriptionEntry.Text = taskToCopy.Description;
 				return us;
 			});
-			taskNameEntry.Text = taskToEdit.Name;
-			taskDescriptionEntry.Text = taskToEdit.Description;
+			
+			EditPanel.Visible = true;
 		}
 
 		protected void DeleteButton_Click(object sender, EventArgs e) 
@@ -106,11 +117,11 @@ namespace BUKEP.Student.WebFormsTodo
 			EditUserStateDirectly((us) =>
 			{
 				int.TryParse(btn.CommandArgument, out int taskIndex);
-				Task taskToDelete = us.UserTaskManager.GetTasks().ElementAt(taskIndex);
-				us.UserTaskManager.RemoveTask(taskToDelete);
-				us.IsInEditMode = false;
+				us.EditingTask = us.UserTaskManager.GetTasks().ElementAt(taskIndex);
+				RegenerateTaskTable(us);
 				return us;
 			});
+			Response.Redirect("~/Deletion.aspx");
 		}
 
 		protected void CancelEdit_Click(object sender, EventArgs e)
@@ -118,35 +129,46 @@ namespace BUKEP.Student.WebFormsTodo
 			EditUserStateDirectly((us) =>
 			{
 				us.IsInEditMode = false;
+				RegenerateTaskTable(us);
 				return us;
 			});
+			EditPanel.Visible = false;
 		}
 
 		protected void ConfirmEdit_Click(object sender, EventArgs e) 
 		{
+			bool HtmlInTitle = Regex.Match(taskNameEntry.Text, @"<(.|\n)*?>").Success;
+			bool HtmlInDescription = Regex.Match(taskNameEntry.Text, @"<(.|\n)*?>").Success;
+			if(HtmlInDescription || HtmlInTitle) {
+				EditUserStateDirectly(us =>
+				{
+					us.IsInEditMode = false;
+					RegenerateTaskTable(us);
+					return us;
+				});
+
+				taskNameEntry.Text = string.Empty;
+				taskDescriptionEntry.Text = string.Empty;
+				EditPanel.Visible = false;
+				return;
+			}
 			EditUserStateDirectly((userState) =>
 			{
-				if (userState.IsInEditMode)
+				if (userState.IsInEditMode && userState.EditingTask != null)
 				{
-					if(userState.EditingTask != null)
-					{
-						EditUserStateDirectly((us) =>
-						{
-							us.UserTaskManager.EditTask(us.EditingTask, taskNameEntry.Text, taskDescriptionEntry.Text);
-							us.EditingTask = null;
-							return us;
-						});
-						taskNameEntry.Text = string.Empty;
-						taskDescriptionEntry.Text = string.Empty;
-					}
+					userState.UserTaskManager.EditTask(userState.EditingTask, taskNameEntry.Text, taskDescriptionEntry.Text);
+					userState.EditingTask = null;
 				}
 				else
 				{
 					userState.UserTaskManager.AddTask(taskNameEntry.Text, taskDescriptionEntry.Text);
-					taskNameEntry.Text = string.Empty;
-					taskDescriptionEntry.Text = string.Empty;
 				}
 				userState.IsInEditMode = false;
+
+				taskNameEntry.Text = string.Empty;
+				taskDescriptionEntry.Text = string.Empty;
+				EditPanel.Visible = false;
+				RegenerateTaskTable(userState);
 				return userState;
 			});
 		}

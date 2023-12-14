@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace BUKEP.Student.Todo
+﻿namespace BUKEP.Student.Todo
 {
 	/// <summary>
 	/// Класс для доступа к списку задач
@@ -27,6 +25,20 @@ namespace BUKEP.Student.Todo
 		}
 
 		/// <inheritdoc/>
+		public void RemoveTask(int taskIndex)
+		{
+			try
+			{
+				_taskList.RemoveAt(taskIndex);
+			} 
+			catch (ArgumentOutOfRangeException)
+			{
+				return;
+			}
+			
+		}
+
+		/// <inheritdoc/>
 		public IEnumerable<Task> GetTasks()
 		{
 			foreach (var task in _taskList)
@@ -35,13 +47,8 @@ namespace BUKEP.Student.Todo
 			}
 		}
 
-		/// <summary>
-		/// <para>Ищет task в списке задач, и возвращает true, если такой есть</para>
-		/// <para>Пояснение - List.Contains не сравнивает значения внутри элементов, а только их ссылки, поэтому эта функция нужна</para>
-		/// </summary>
-		/// <param name="task">Задача, которую нужно найти</param>
-		/// <returns>true если такой task существует, иначе false</returns>
-		private bool ContainsTask(Task task)
+		/// <inheritdoc/>
+		public bool ContainsTask(Task task)
 		{
 			foreach (Task item in _taskList)
 			{
