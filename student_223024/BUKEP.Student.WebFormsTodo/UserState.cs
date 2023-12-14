@@ -8,13 +8,19 @@ namespace BUKEP.Student.WebFormsTodo
 	/// </summary>
 	public class UserState
 	{
-		// Показывает, находится ли пользователь в режиме редактирования\создания задачи
+		/// <summary>
+		/// Показывает, находится ли пользователь в режиме редактирования\создания задачи
+		/// </summary>
 		public bool IsInEditMode { get; set; } = false;
 
-		// Индивидуальный ITaskManager пользователя
+		/// <summary>
+		/// Индивидуальный ITaskManager пользователя
+		/// </summary>
 		public ITaskManager UserTaskManager { get; set; }
 
-		// Task, который сейчас редактируется
+		/// <summary>
+		/// Task, который сейчас редактируется
+		/// </summary>
 		public Task EditingTask { get; set; }
 
 		public override string ToString()
