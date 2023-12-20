@@ -1,7 +1,5 @@
 ﻿using BUKEP.Student.Todo;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web.UI.WebControls;
 
@@ -10,174 +8,101 @@ namespace BUKEP.Student.WebFormsTodo
 	public partial class Todo : System.Web.UI.Page
 	{
 		/// <summary>
-		/// Функция, принимающая анонимную функцию для редактирования UserState, после её выполнения UserState сохраняется в Session
+		/// Очищает все вводы на сайте
 		/// </summary>
-		/// <param name="f">Анонимная функция, принимающая и возвращающая UserState</param>
-		/// <exception cref="Exception">Если рак на горе свистнет, и в Session не UserInfo, то эта ошибка будет брошена</exception>
-		private void EditUserStateDirectly(Func<UserState, UserState> f)
+		/// <remarks>
+		/// Впринципе не требуется, но это делает код чище
+		/// </remarks>
+		/// <param name="setEditPanelVisibility">Задаёт видимость панели редактирования/создания задачи</param>
+		private void ClearEntries(bool setEditPanelVisibility)
 		{
-			if (!(Session["UserInfo"] is UserState userdata))
-			{
-				throw new Exception("UserInfo is null somehow???");
-			}
-			userdata = f(userdata);
-			Session["UserInfo"] = userdata;
+			taskNameEntry.Text = string.Empty;
+			taskDescriptionEntry.Text = string.Empty;
+			taskIDEntry.Text = string.Empty;
+			EditPanel.Visible = setEditPanelVisibility;
 		}
 
 		/// <summary>
-		/// Удаляет все элементы таблицы TaskTable кроме первого, и создает их снова - регенерирует
+		/// Получает ID задачи из кнопки
 		/// </summary>
-		private void RegenerateTaskTable()
+		/// <param name="buttonObject">кнопка из event'а</param>
+		/// <returns>ID задачи</returns>
+		private int GetTaskIDFromButton(object buttonObject)
 		{
-			if(!(Session["UserInfo"] is UserState userState))
-			{
-				return;
-			}
-			ITaskManager taskManager = userState.UserTaskManager;
-			IEnumerable<Task> tasks = taskManager.GetTasks();
-
-			TableRow header = TaskTable.Rows[0];
-			TaskTable.Rows.Clear();
-			TaskTable.Rows.Add(header);
-
-			// создание таблицы задач по данным сессии пользователя
-			for (int i = 0; i < tasks.Count(); i++)
-			{
-				Task task = tasks.ToList()[i];
-
-				TableRow tr = new TableRow();
-
-				TableCell taskNameCell = new TableCell
-				{
-					Text = task.Name
-				};
-
-				TableCell taskDescriptionCell = new TableCell
-				{
-					Text = task.Description
-				};
-
-				TableCell modifierButtonsCell = new TableCell();
-
-				Button deleteButton = new Button
-				{
-					CommandName = "deleteTask",
-					CommandArgument = i + "",
-					Text = "Удалить",
-					CssClass = "btn btn-danger",
-				};
-				deleteButton.Click += new EventHandler(DeleteButton_Click);
-
-				Button editButton = new Button
-				{
-					CommandName = "editTask",
-					CommandArgument = i + "",
-					Text = "Изменить",
-					CssClass = "btn btn-success",
-				};
-				editButton.Click += new EventHandler(EditButton_Click);
-				
-
-				modifierButtonsCell.Controls.Add(editButton);
-				modifierButtonsCell.Controls.Add(deleteButton);
-
-				tr.Cells.Add(taskNameCell);
-				tr.Cells.Add(taskDescriptionCell);
-				tr.Cells.Add(modifierButtonsCell);
-				TaskTable.Rows.Add(tr);
-			}
+			Button button = (Button)buttonObject;
+			GridViewRow row = (GridViewRow)button.NamingContainer;
+			bool success = int.TryParse(TaskView.DataKeys[row.RowIndex].Values[0].ToString(), out int TaskID);
+			return TaskID;
 		}
 
-		protected void NewTaskButton_Click(object sender, EventArgs e)
+		/// <summary>
+		/// Используя GetTaskFromIDButton, возвращает Task
+		/// </summary>
+		/// <param name="buttonObject">кнпока из event'а</param>
+		/// <returns>Задача из кнопки</returns>
+		private Task GetTaskFromButton(object buttonObject)
 		{
-			EditPanel.Visible = !EditPanel.Visible;
-			RegenerateTaskTable();
+			int taskid = GetTaskIDFromButton(buttonObject);
+			return (Session["_userData"] as ITaskManager).GetTaskById(taskid);
 		}
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			if (Session["UserInfo"] == null)
+			if (!(Session["_userData"] is ITaskManager))
 			{
-				Session["UserInfo"] = new UserState() { UserTaskManager = new TaskManager() };
+				ITaskManager tm = new TaskManager();
+				Session["_userData"] = tm;
 			}
-			RegenerateTaskTable();
+			TaskView.DataSource = (Session["_userData"] as ITaskManager).GetTasks();
+			TaskView.DataBind();
+		}
+
+		protected void NewTaskButton_Click(object sender, EventArgs e)
+		{
+			ClearEntries(!EditPanel.Visible);
 		}
 
 		protected void EditButton_Click(object sender, EventArgs e)
 		{
-			Button btn = sender as Button;
-			EditUserStateDirectly((us) =>
-			{
-				int.TryParse(btn.CommandArgument, out int taskIndex);
-				Task taskToCopy = us.UserTaskManager.GetTasks().ElementAt(taskIndex);
-				us.EditingTask = taskToCopy;
-				us.IsInEditMode = true;
-
-				taskNameEntry.Text = taskToCopy.Name;
-				taskDescriptionEntry.Text = taskToCopy.Description;
-				return us;
-			});
-
+			Task taskToEdit = GetTaskFromButton(sender);
+			taskNameEntry.Text = taskToEdit.Name;
+			taskDescriptionEntry.Text = taskToEdit.Description;
+			taskIDEntry.Text = taskToEdit.ID.ToString();
 			EditPanel.Visible = true;
 		}
 
 		protected void DeleteButton_Click(object sender, EventArgs e)
 		{
-			Button btn = sender as Button;
-			EditUserStateDirectly((us) =>
-			{
-				int.TryParse(btn.CommandArgument, out int taskIndex);
-				us.EditingTask = us.UserTaskManager.GetTasks().ElementAt(taskIndex);
-				return us;
-			});
-			Response.Redirect("~/Deletion.aspx");
+			Task taskToEdit = GetTaskFromButton(sender);
+			Response.Redirect($"/deletion?taskid={taskToEdit.ID}");
 		}
 
 		protected void CancelEdit_Click(object sender, EventArgs e)
 		{
-			EditUserStateDirectly((us) =>
-			{
-				us.IsInEditMode = false;
-				return us;
-			});
-			RegenerateTaskTable();
-			EditPanel.Visible = false;
+			ClearEntries(false);
 		}
 
 		protected void ConfirmEdit_Click(object sender, EventArgs e)
 		{
-			bool HtmlInTitle = Regex.Match(taskNameEntry.Text, @"<(.|\n)*?>").Success;
-			bool HtmlInDescription = Regex.Match(taskNameEntry.Text, @"<(.|\n)*?>").Success;
-			if (HtmlInDescription || HtmlInTitle)
+			bool isEditing = int.TryParse(taskIDEntry.Text, out int taskId);
+			bool HTMLinName = Regex.IsMatch(taskNameEntry.Text, @"<.*?>");
+			bool HTMLinDescription = Regex.IsMatch(taskDescriptionEntry.Text, @"<.*?>");
+			if (HTMLinName || HTMLinDescription) {
+				ClearEntries(false);
+				return;
+			}
+			if (isEditing)
 			{
-				EditUserStateDirectly(us =>
-				{
-					us.IsInEditMode = false;
-					return us;
-				});
-			} 
+				(Session["_userData"] as ITaskManager).EditTask(taskId, taskNameEntry.Text, taskDescriptionEntry.Text);
+			}
 			else
 			{
-				EditUserStateDirectly((userState) =>
-				{
-					if (userState.IsInEditMode && userState.EditingTask != null)
-					{
-						userState.UserTaskManager.EditTask(userState.EditingTask, taskNameEntry.Text, taskDescriptionEntry.Text);
-						userState.EditingTask = null;
-					}
-					else
-					{
-						userState.UserTaskManager.AddTask(taskNameEntry.Text, taskDescriptionEntry.Text);
-					}
-					userState.IsInEditMode = false;
-					return userState;
-				});
+				(Session["_userData"] as ITaskManager).AddTask(taskNameEntry.Text, taskDescriptionEntry.Text);
 			}
-			
-			taskNameEntry.Text = string.Empty;
-			taskDescriptionEntry.Text = string.Empty;
-			EditPanel.Visible = false;
-			RegenerateTaskTable();
+			ClearEntries(false);
+
+			TaskView.DataSource = (Session["_userData"] as ITaskManager).GetTasks();
+			TaskView.DataBind();
 		}
 	}
 }

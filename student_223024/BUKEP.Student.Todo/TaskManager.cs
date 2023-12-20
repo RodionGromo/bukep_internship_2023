@@ -1,4 +1,6 @@
-﻿namespace BUKEP.Student.Todo
+﻿using System.Diagnostics;
+
+namespace BUKEP.Student.Todo
 {
 	/// <summary>
 	/// Класс для доступа к списку задач
@@ -7,14 +9,18 @@
 	{
 		// Список задач
 		private List<Task> _taskList = new();
+		// Индекс для разности id задач
+		private int _idIndex = 0;
 
 		/// <inheritdoc/>
 		public void AddTask(string name, string description)
 		{
-			Task item = new() { Name = name.Trim(), Description = description.Trim() };
+			Task item = new() { Name = name.Trim(), Description = description.Trim(), ID=_idIndex };
 			if (!ContainsTask(item))
 			{
+				Debug.WriteLine($"added task {name}, id: {_idIndex}");
 				_taskList.Add(item);
+				_idIndex++;
 			}
 		}
 
@@ -71,23 +77,39 @@
 		}
 
 		/// <inheritdoc/>
-		public void EditTask(Task task, string? name, string? description)
+		public Task? GetTaskById(int id)
+		{
+			foreach (var task in _taskList)
+			{
+				if(task.ID == id)
+				{
+					return task;
+				}
+			}
+			return null;
+		}
+
+		/// <inheritdoc/>
+		public void EditTask(int id, string? name, string? description)
 		{
 			if(name is null && description is null)
 			{
 				return;
 			}
-			int taskIndex = _taskList.IndexOf(task);
-			if (taskIndex != -1)
+			foreach (var task in _taskList)
 			{
-				Task foundTask = _taskList[taskIndex];
-				if(name is not null)
+				if(task.ID == id) 
 				{
-					_taskList[taskIndex].Name = (foundTask.Name != name) ? name : foundTask.Name;
-				}
-				if(description is not null) 
-				{
-					_taskList[taskIndex].Description = (foundTask.Description != description) ? description : foundTask.Description;
+					int taskIndex = _taskList.IndexOf(task);
+					if (name is not null)
+					{
+						_taskList[taskIndex].Name = (task.Name != name) ? name : task.Name;
+					}
+					if (description is not null)
+					{
+						_taskList[taskIndex].Description = (task.Description != description) ? description : task.Description;
+					}
+					break;
 				}
 			}
 		}

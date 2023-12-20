@@ -25,24 +25,23 @@
 		void RemoveTask(int taskIndex);
 
 		/// <summary>
-		/// <para>Ищет task в списке задач, и возвращает true, если такой есть</para>
-		/// <para>Пояснение - List.Contains не сравнивает значения внутри элементов, а только их ссылки, поэтому эта функция нужна</para>
+		/// Возвращает Task по id
 		/// </summary>
-		/// <param name="task">Задача, которую нужно найти</param>
-		/// <returns>true если такой task существует, иначе false</returns>
-		bool ContainsTask(Task task);
+		/// <param name="id">ID, по которому искать задачу</param>
+		/// <returns></returns>
+		Task? GetTaskById(int id);
 
 		/// <summary>
-		/// Возвращает итератор списка задач
+		/// Возвращает список задач
 		/// </summary>
 		IEnumerable<Task> GetTasks();
 
 		/// <summary>
-		/// Редактирует задачу task, заменяя её имя и\или описание
+		/// Редактирует задачу под ID id, заменяя её имя и\или описание
 		/// </summary>
-		/// <param name="task">Задача, которую нужно редактировать</param>
+		/// <param name="id">ID задачи, которую нужно редактировать</param>
 		/// <param name="name">Новое название</param>
 		/// <param name="description">Новое описание</param>
-		void EditTask(Task task, string? name, string? description);
+		void EditTask(int id, string? name, string? description);
 	}
 }

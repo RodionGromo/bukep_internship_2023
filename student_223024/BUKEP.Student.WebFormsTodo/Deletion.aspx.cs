@@ -1,39 +1,23 @@
-﻿using System;
-using System.Diagnostics;
+﻿using BUKEP.Student.Todo;
+using System;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace BUKEP.Student.WebFormsTodo
 {
 	public partial class Deletion : Page
 	{
+		private ITaskManager _taskManager;
+		private Task _taskToDelete;
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			if (Session["UserInfo"] is UserState userState)
-			{
-				if(userState.EditingTask != null)
-				{
-					QuestionLabel.InnerText = $"Вы действительно хотите удалить задачу {userState.EditingTask.Name}? Если да, то нажмите кнопку \"Удалить\", иначе нажмите \"Отмена\".";
-				}
-			} 
-			else
-			{
-				Debug.WriteLine("no userstate or editing task is null");
-				if(Session["UserInfo"] is UserState us)
-				{
-					Debug.Write("Task to edit: ");
-					Debug.WriteLine(us.EditingTask.Name);
-				}
-				Response.Redirect("~/Todo.aspx");
-			}
+			_taskManager = Session["_userData"] as ITaskManager;
+			_taskToDelete = _taskManager.GetTaskById(int.Parse(Request["taskid"]));
+			QuestionLabel.InnerText = $"Вы действительно хотите удалить задачу {_taskToDelete.Name}? Если да, то нажмите кнопку \"Удалить\", иначе нажмите \"Отмена\".";
 		}
 
 		protected void DeleteButton_Click(object sender, EventArgs e)
 		{
-			if(Session["UserInfo"] is UserState userState)
-			{
-				userState.UserTaskManager.RemoveTask(userState.EditingTask);
-			}
+			_taskManager.RemoveTask(_taskToDelete);
 			Response.Redirect("~/Todo.aspx");
 		}
 	}

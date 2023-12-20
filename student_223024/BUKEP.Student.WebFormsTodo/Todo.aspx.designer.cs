@@ -15,22 +15,13 @@ namespace BUKEP.Student.WebFormsTodo
 	{
 
 		/// <summary>
-		/// form1 элемент управления.
+		/// TaskView элемент управления.
 		/// </summary>
 		/// <remarks>
 		/// Автоматически созданное поле.
 		/// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
 		/// </remarks>
-		protected global::System.Web.UI.HtmlControls.HtmlForm form1;
-
-		/// <summary>
-		/// TaskTable элемент управления.
-		/// </summary>
-		/// <remarks>
-		/// Автоматически созданное поле.
-		/// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
-		/// </remarks>
-		protected global::System.Web.UI.WebControls.Table TaskTable;
+		protected global::System.Web.UI.WebControls.GridView TaskView;
 
 		/// <summary>
 		/// EditPanel элемент управления.
@@ -58,5 +49,14 @@ namespace BUKEP.Student.WebFormsTodo
 		/// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
 		/// </remarks>
 		protected global::System.Web.UI.WebControls.TextBox taskDescriptionEntry;
+
+		/// <summary>
+		/// taskIDEntry элемент управления.
+		/// </summary>
+		/// <remarks>
+		/// Автоматически созданное поле.
+		/// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+		/// </remarks>
+		protected global::System.Web.UI.WebControls.TextBox taskIDEntry;
 	}
 }
