@@ -8,11 +8,13 @@
 		/// <summary>
 		/// ID задачи
 		/// </summary>
-		public int ID { get; set; }
+		public int Id { get; set; }
+
 		/// <summary>
 		/// Название задачи
 		/// </summary>
 		public string Name { get; set; } = string.Empty;
+
 		/// <summary>
 		/// Описание задачи
 		/// </summary>

@@ -19,12 +19,6 @@
 		void RemoveTask(Task task);
 
 		/// <summary>
-		/// Удаляет задачу из списка по её индексу
-		/// </summary>
-		/// <param name="taskIndex">Индекс задачи, которую нужно удалить</param>
-		void RemoveTask(int taskIndex);
-
-		/// <summary>
 		/// Возвращает Task по id
 		/// </summary>
 		/// <param name="id">ID, по которому искать задачу</param>

@@ -1,10 +1,10 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Todo.aspx.cs" Inherits="BUKEP.Student.WebFormsTodo.Todo" EnableEventValidation="false" Title="Todo"%>
+﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Todo.aspx.cs" Inherits="BUKEP.Student.WebFormsTodo.Todo" EnableEventValidation="false" Title="Todo" %>
 
 <asp:Content ID="TodoPage" ContentPlaceHolderID="MainContent" runat="server">
     <style>
         .vertical-left {
             display: flex;
-            flex-flow:column;
+            flex-flow: column;
         }
 
         .container2 {
@@ -28,7 +28,7 @@
         <br />
         <asp:GridView runat="server" ID="TaskView" DataKeyNames="ID" CssClass="table" AutoGenerateColumns="false">
             <Columns>
-                <asp:BoundField DataField="ID" HeaderText="ID задачи" Visible="false"/>
+                <asp:BoundField DataField="ID" HeaderText="ID задачи" Visible="false" />
                 <asp:BoundField DataField="Name" HeaderText="Задача" />
                 <asp:BoundField DataField="Description" HeaderText="Описание" />
                 <asp:TemplateField>
@@ -45,10 +45,10 @@
     </div>
     <asp:Panel runat="server" ID="EditPanel" CssClass="container vertical-left container2" Visible="false">
         <h2>Задача</h2>
-        <asp:textbox runat="server" placeholder="Введите заголовок задачи..." ID="taskNameEntry" CssClass="form-control widetextbox" />
+        <asp:TextBox runat="server" placeholder="Введите заголовок задачи..." ID="taskNameEntry" CssClass="form-control widetextbox" />
         <br />
         <a>Описание задачи:</a>
-        <asp:textbox runat="server" placeholder="Введите описание задачи..." ID="taskDescriptionEntry" CssClass="form-control widetextbox" />
+        <asp:TextBox runat="server" placeholder="Введите описание задачи..." ID="taskDescriptionEntry" CssClass="form-control widetextbox" />
         <br />
         <div class="row justify-content-end">
             <asp:Button runat="server" OnClick="CancelEdit_Click" Text="Отменить" CssClass="btn btn-secondary col-3 float-end col-lg-2" />

@@ -6,8 +6,8 @@
         <p runat="server" id="QuestionLabel"></p>
         <div class="row">
             <b class="col-8">&nbsp;</b>
-            <asp:Button runat="server" Text="Отмена" PostBackUrl="~/Todo.aspx" CssClass="btn btn-secondary col-2"/>
-            <asp:Button runat="server" Text="Удалить" OnClick="DeleteButton_Click" CssClass="btn btn-danger col-2"/>
+            <asp:Button runat="server" Text="Отмена" PostBackUrl="~/Todo.aspx" CssClass="btn btn-secondary col-2" />
+            <asp:Button runat="server" Text="Удалить" OnClick="DeleteButton_Click" CssClass="btn btn-danger col-2" />
         </div>
     </asp:Panel>
 </asp:Content>
