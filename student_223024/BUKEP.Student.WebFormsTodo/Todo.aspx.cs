@@ -5,21 +5,9 @@ using System.Web.UI.WebControls;
 
 namespace BUKEP.Student.WebFormsTodo
 {
+
     public partial class Todo : System.Web.UI.Page
     {
-        // Личный ITaskManager для сайта, чтоб не писать всю конструкцию преобразования Session["_userData"] в ITaskManager
-        private ITaskManager TaskManager
-        {
-            get
-            {
-                if (!(Session["_userData"] is ITaskManager))
-                {
-                    Session["_userData"] = new TaskManager();
-                }
-                return (ITaskManager)Session["_userData"];
-            }
-        }
-
         /// <summary>
         /// Очищает все вводы на сайте
         /// </summary>
@@ -55,12 +43,12 @@ namespace BUKEP.Student.WebFormsTodo
         private Task GetTaskFromButton(Button buttonObject)
         {
             int taskid = GetTaskIDFromButton(buttonObject);
-            return TaskManager.GetTaskById(taskid);
+            return TaskManagerState.TaskManager.GetTaskById(taskid);
         }
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            TaskView.DataSource = TaskManager.GetTasks();
+            TaskView.DataSource = TaskManagerState.TaskManager.GetTasks();
             TaskView.DataBind();
         }
 
@@ -99,17 +87,20 @@ namespace BUKEP.Student.WebFormsTodo
                 ClearEntries(false);
                 return;
             }
-            if (isEditing)
+            if(!string.IsNullOrWhiteSpace(taskNameEntry.Text))
             {
-                TaskManager.EditTask(taskId, taskNameEntry.Text, taskDescriptionEntry.Text);
-            }
-            else
-            {
-                TaskManager.AddTask(taskNameEntry.Text, taskDescriptionEntry.Text);
-            }
+				if (isEditing)
+				{
+					TaskManagerState.TaskManager.EditTask(taskId, taskNameEntry.Text, taskDescriptionEntry.Text);
+				}
+				else
+				{
+					TaskManagerState.TaskManager.AddTask(taskNameEntry.Text, taskDescriptionEntry.Text);
+				}
+			}
             ClearEntries(false);
 
-            TaskView.DataSource = TaskManager.GetTasks();
+            TaskView.DataSource = TaskManagerState.TaskManager.GetTasks();
             TaskView.DataBind();
         }
     }

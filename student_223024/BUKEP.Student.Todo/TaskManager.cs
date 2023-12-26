@@ -8,7 +8,7 @@ namespace BUKEP.Student.Todo
     public class TaskManager : ITaskManager
     {
         // Список задач
-        private List<Task> _taskList = new();
+        private readonly List<Task> _taskList = new();
         // Индекс для разности id задач
         private int _idIndex = 0;
 
