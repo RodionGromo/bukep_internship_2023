@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BUKEP.Student\BUKEP.Student.Todo\BUKEP.Student.Todo.csproj" />
+    <ProjectReference Include="..\BUKEP.Student.Todo\BUKEP.Student.Todo.csproj" />
   </ItemGroup>
 
 </Project>

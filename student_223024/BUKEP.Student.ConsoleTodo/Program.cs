@@ -1,4 +1,5 @@
 ﻿using BUKEP.Student.Todo;
+using Task = BUKEP.Student.Todo.Task;
 
 namespace ConsoleTodo
 {
@@ -87,19 +88,19 @@ namespace ConsoleTodo
         /// </summary>
         static void ShowTasks()
         {
-            List<BUKEP.Student.Todo.Task> tasks = taskMan.GetTasks();
-            if (tasks.Count == 0)
+            List<Task> tasks = taskMan.GetTasks().ToList();
+            if (tasks.Count() == 0)
             {
                 Console.WriteLine("Нет добавленных дел\n");
                 return;
             }
             Console.WriteLine("Список текущих задач:");
-            for (int i = 0; i < tasks.Count; i++)
+            foreach (var task in tasks)
             {
-                Console.WriteLine($"{i + 1}. {tasks[i].Name}:");
-                if (!string.IsNullOrWhiteSpace(tasks[i].Description))
+                Console.WriteLine($"{tasks.IndexOf(task)}. {task.Name}:");
+                if (!string.IsNullOrWhiteSpace(task.Description))
                 {
-                    Console.WriteLine($">\t{tasks[i].Description}");
+                    Console.WriteLine($">\t{task.Description}");
                 } 
                 else 
                 {
