@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-namespace BUKEP.Student.Todo
+﻿namespace BUKEP.Student.Todo
 {
     /// <summary>
     /// Класс для доступа к списку задач

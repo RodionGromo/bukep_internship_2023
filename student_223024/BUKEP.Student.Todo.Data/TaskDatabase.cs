@@ -4,66 +4,79 @@ namespace BUKEP.Student.Todo.Data
 {
 	public class TaskDatabase : ITaskManager
 	{
-		private SqlConnection _dbCon;
-		// TODO: удалить заготовленную запись и вернуть индекс к 0
-		private int _taskIndex = 1;
+		// соединение с БД
+		private readonly SqlConnection _dbCon;
 
+		// индекс для id задач
+		private int _taskIndex = 0;
+
+		/// <summary>
+		/// Функция, возвращающая список задач из базы данных
+		/// </summary>
+		/// <returns>Список задач</returns>
 		private List<Task> GetTaskList()
 		{
 			SqlCommand cmd = new("SELECT * FROM TaskTable", _dbCon);
-			SqlDataReader data = cmd.ExecuteReader();
+			SqlDataReader dataReader = cmd.ExecuteReader();
 			List<Task> tasks = new();
-			if (data.HasRows)
+			if (dataReader.HasRows)
 			{
-				while (data.Read())
+				while (dataReader.Read())
 				{
 					Task newTask = new()
 					{
-						Id = (int)data.GetValue(0),
-						Name = (string)data.GetValue(1),
-						Description = (string?)data.GetValue(2)
+						Id = (int)dataReader.GetValue(0),
+						Name = (string)dataReader.GetValue(1),
+						Description = (string?)dataReader.GetValue(2)
 					};
 					tasks.Add(newTask);
 				}
 			}
-			data.Close();
+			dataReader.Close();
 			return tasks;
 		}
 
+		/// <summary>
+		/// Функция, исполняющая команду command на базе данных и не возвращает никакого результата
+		/// </summary>
+		/// <param name="command">Команда, которую нужно выполнить</param>
 		private void SendSQLCommandIgnoreResults(string command)
 		{
 			SqlCommand cmd = new(command, _dbCon);
 			cmd.ExecuteNonQuery();
 		}
 
+		/// <inheritdoc/>
 		public void AddTask(string Name, string? Description)
 		{
 			SendSQLCommandIgnoreResults($"INSERT INTO TaskTable (Id, Name, Description) VALUES ({_taskIndex}, '{Name}', '{Description}')");
+			_taskIndex++;
 		}
 
+		/// <inheritdoc/>
 		public void RemoveTask(Task task)
 		{
 			SendSQLCommandIgnoreResults($"DELETE FROM TaskTable WHERE Id = {task.Id}");
 		}
 
+		/// <inheritdoc/>
 		public Task GetTaskById(int id)
 		{
 			SqlCommand sql = new($"SELECT * FROM TaskTable WHERE id = {id}", _dbCon);
-			SqlDataReader data = sql.ExecuteReader();
+			SqlDataReader dataReader = sql.ExecuteReader();
 			Task existingTask = new();
-			if(data.HasRows)
+			if(dataReader.HasRows)
 			{
-				while (data.Read())
-				{
-					existingTask.Id = (int)data.GetValue(0);
-					existingTask.Name = (string)data.GetValue(1);
-					existingTask.Description = (string?)data.GetValue(2);
-				}
+				dataReader.Read();
+				existingTask.Id = (int)dataReader.GetValue(0);
+				existingTask.Name = (string)dataReader.GetValue(1);
+				existingTask.Description = (string?)dataReader.GetValue(2);
 			}
-			data.Close();
+			dataReader.Close();
 			return existingTask;
 		}
 
+		/// <inheritdoc/>
 		public IEnumerable<Task> GetTasks()
 		{
 			foreach(Task task in GetTaskList())
@@ -72,6 +85,7 @@ namespace BUKEP.Student.Todo.Data
 			}
 		}
 
+		/// <inheritdoc/>
 		public void EditTask(int id, string? Name, string? Description)
 		{
 			SendSQLCommandIgnoreResults($"UPDATE TaskTable SET Name = '{Name}', Description = '{Description}' WHERE Id = {id}");
