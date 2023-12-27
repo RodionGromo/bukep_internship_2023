@@ -44,6 +44,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <Reference Include="Azure.Core, Version=1.25.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
       <HintPath>..\packages\Azure.Core.1.25.0\lib\net461\Azure.Core.dll</HintPath>
     </Reference>
@@ -184,6 +185,15 @@
     </Reference>
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Forms" />
+=======
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+>>>>>>> bc568fe80d4867de17aa02348a08594263d9bec6
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -225,7 +235,10 @@
     <Reference Include="Microsoft.AspNet.FriendlyUrls">
       <HintPath>..\BUKEP.Student.Todo\packages\Microsoft.AspNet.FriendlyUrls.Core.1.0.2\lib\net45\Microsoft.AspNet.FriendlyUrls.dll</HintPath>
     </Reference>
+<<<<<<< HEAD
     <Reference Include="WindowsBase" />
+=======
+>>>>>>> bc568fe80d4867de17aa02348a08594263d9bec6
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
@@ -233,10 +246,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <Content Include="App_Data\Database1.mdf" />
     <Content Include="App_Data\Database1_log.ldf">
       <DependentUpon>Database1.mdf</DependentUpon>
     </Content>
+=======
+>>>>>>> bc568fe80d4867de17aa02348a08594263d9bec6
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -341,7 +357,13 @@
       <DependentUpon>Deletion.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
+<<<<<<< HEAD
   <ItemGroup />
+=======
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+>>>>>>> bc568fe80d4867de17aa02348a08594263d9bec6
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Site.Master" />
@@ -353,10 +375,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <ProjectReference Include="..\BUKEP.Student.Todo.Data\BUKEP.Student.Todo.Data.csproj">
       <Project>{198418a3-392c-493f-ac41-cc4ae2449c88}</Project>
       <Name>BUKEP.Student.Todo.Data</Name>
     </ProjectReference>
+=======
+>>>>>>> bc568fe80d4867de17aa02348a08594263d9bec6
     <ProjectReference Include="..\BUKEP.Student.Todo\BUKEP.Student.Todo.csproj">
       <Project>{63c2742d-ec4c-49f4-af3b-fbe4f7c70112}</Project>
       <Name>BUKEP.Student.Todo</Name>
@@ -392,9 +417,13 @@
       <ErrorText>Данный проект ссылается на пакеты NuGet, отсутствующие на этом компьютере. Используйте восстановление пакетов NuGet, чтобы скачать их.  Дополнительную информацию см. по адресу: http://go.microsoft.com/fwlink/?LinkID=322105. Отсутствует следующий файл: {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\BUKEP.Student.Todo\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\BUKEP.Student.Todo\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+<<<<<<< HEAD
     <Error Condition="!Exists('..\packages\Microsoft.Data.SqlClient.SNI.5.1.1\build\net462\Microsoft.Data.SqlClient.SNI.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Data.SqlClient.SNI.5.1.1\build\net462\Microsoft.Data.SqlClient.SNI.targets'))" />
   </Target>
   <Import Project="..\packages\Microsoft.Data.SqlClient.SNI.5.1.1\build\net462\Microsoft.Data.SqlClient.SNI.targets" Condition="Exists('..\packages\Microsoft.Data.SqlClient.SNI.5.1.1\build\net462\Microsoft.Data.SqlClient.SNI.targets')" />
+=======
+  </Target>
+>>>>>>> bc568fe80d4867de17aa02348a08594263d9bec6
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
