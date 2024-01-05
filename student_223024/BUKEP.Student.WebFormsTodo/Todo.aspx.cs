@@ -1,5 +1,7 @@
 ﻿using BUKEP.Student.Todo;
+using BUKEP.Student.Todo.Data;
 using System;
+using System.Configuration;
 using System.Text.RegularExpressions;
 using System.Web.UI.WebControls;
 
@@ -8,14 +10,16 @@ namespace BUKEP.Student.WebFormsTodo
 
     public partial class Todo : System.Web.UI.Page
     {
-        /// <summary>
-        /// Очищает все вводы на сайте
-        /// </summary>
-        /// <remarks>
-        /// Впринципе не требуется, но это делает код чище
-        /// </remarks>
-        /// <param name="setEditPanelVisibility">Задаёт видимость панели редактирования/создания задачи</param>
-        private void ClearEntries(bool setEditPanelVisibility)
+		readonly ITaskManager _taskManager = new DatabaseTaskManager(ConfigurationManager.ConnectionStrings["Database"].ConnectionString);
+
+		/// <summary>
+		/// Очищает все вводы на сайте
+		/// </summary>
+		/// <remarks>
+		/// Впринципе не требуется, но это делает код чище
+		/// </remarks>
+		/// <param name="setEditPanelVisibility">Задаёт видимость панели редактирования/создания задачи</param>
+		private void ClearEntries(bool setEditPanelVisibility)
         {
             taskNameEntry.Text = string.Empty;
             taskDescriptionEntry.Text = string.Empty;
@@ -43,12 +47,12 @@ namespace BUKEP.Student.WebFormsTodo
         private Task GetTaskFromButton(Button buttonObject)
         {
             int taskid = GetTaskIDFromButton(buttonObject);
-            return TaskManagerState.TaskManager.GetTaskById(taskid);
+            return _taskManager.GetTaskById(taskid);
         }
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            TaskView.DataSource = TaskManagerState.TaskManager.GetTasks();
+            TaskView.DataSource = _taskManager.GetTasks();
             TaskView.DataBind();
         }
 
@@ -91,16 +95,16 @@ namespace BUKEP.Student.WebFormsTodo
             {
 				if (isEditing)
 				{
-					TaskManagerState.TaskManager.EditTask(taskId, taskNameEntry.Text, taskDescriptionEntry.Text);
+					_taskManager.EditTask(taskId, taskNameEntry.Text, taskDescriptionEntry.Text);
 				}
 				else
 				{
-					TaskManagerState.TaskManager.AddTask(taskNameEntry.Text, taskDescriptionEntry.Text);
+					_taskManager.AddTask(taskNameEntry.Text, taskDescriptionEntry.Text);
 				}
 			}
             ClearEntries(false);
 
-            TaskView.DataSource = TaskManagerState.TaskManager.GetTasks();
+            TaskView.DataSource = _taskManager.GetTasks();
             TaskView.DataBind();
         }
     }
