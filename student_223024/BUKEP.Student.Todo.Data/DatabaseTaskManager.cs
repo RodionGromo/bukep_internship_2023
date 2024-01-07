@@ -8,9 +8,6 @@ namespace BUKEP.Student.Todo.Data
 		// строка соединения для БД
 		private readonly string _connectionString;
 
-		// индекс для id задач
-		private int _taskIndex = 0;
-
 		public DatabaseTaskManager(string connectionString)
 		{
 			_connectionString = connectionString;
@@ -69,7 +66,6 @@ namespace BUKEP.Student.Todo.Data
 				cmd.ExecuteNonQuery();
 				return 0;
 			});
-			_taskIndex++;
 		}
 
 		/// <inheritdoc/>
