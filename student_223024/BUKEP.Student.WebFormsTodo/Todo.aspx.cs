@@ -1,7 +1,6 @@
 ﻿using BUKEP.Student.Todo;
 using BUKEP.Student.Todo.Data;
 using System;
-using System.Configuration;
 using System.Text.RegularExpressions;
 using System.Web.UI.WebControls;
 
@@ -10,7 +9,7 @@ namespace BUKEP.Student.WebFormsTodo
 
     public partial class Todo : System.Web.UI.Page
     {
-		readonly ITaskManager _taskManager = new DatabaseTaskManager(ConfigurationManager.ConnectionStrings["Database"].ConnectionString);
+        readonly ITaskManager _taskManager = EFDBTaskManager();
 
 		/// <summary>
 		/// Очищает все вводы на сайте
