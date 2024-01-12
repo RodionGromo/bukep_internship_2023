@@ -43,8 +43,13 @@ namespace BUKEP.Student.Todo.Data
 		public void RemoveTask(Task task)
 		{
 			using TaskDBContext db = new();
-			db.Tasks.Remove(task);
-			db.SaveChanges();
+			Task? taskToDelete = GetTaskById(task.Id);
+			if(taskToDelete != null)
+			{
+				db.Tasks.Attach(taskToDelete);
+				db.Tasks.Remove(taskToDelete);
+				db.SaveChanges();
+			}
 		}
 	}
 }

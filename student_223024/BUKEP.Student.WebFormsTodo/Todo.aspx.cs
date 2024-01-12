@@ -9,7 +9,7 @@ namespace BUKEP.Student.WebFormsTodo
 
     public partial class Todo : System.Web.UI.Page
     {
-        readonly ITaskManager _taskManager = EFDBTaskManager();
+        readonly ITaskManager _taskManager = new EFDBTaskManager();
 
 		/// <summary>
 		/// Очищает все вводы на сайте

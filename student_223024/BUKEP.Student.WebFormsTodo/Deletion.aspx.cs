@@ -1,14 +1,13 @@
 ﻿using BUKEP.Student.Todo;
 using BUKEP.Student.Todo.Data;
 using System;
-using System.Configuration;
 using System.Web.UI;
 
 namespace BUKEP.Student.WebFormsTodo
 {
     public partial class Deletion : Page
     {
-		readonly ITaskManager _taskManager = new DatabaseTaskManager(ConfigurationManager.ConnectionStrings["Database"].ConnectionString);
+		readonly ITaskManager _taskManager = new EFDBTaskManager();
 		private Task _taskToDelete;
 
         protected void Page_Load(object sender, EventArgs e)
