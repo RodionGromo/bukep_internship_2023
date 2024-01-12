@@ -4,7 +4,7 @@
     /// Класс для доступа к списку задач
     /// </summary>
     public class TaskManager : ITaskManager
-    {
+	{
         // Список задач
         private readonly List<Task> _taskList = new();
         // Индекс для разности id задач
