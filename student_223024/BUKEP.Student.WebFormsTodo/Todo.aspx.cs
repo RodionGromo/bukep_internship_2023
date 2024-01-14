@@ -9,16 +9,16 @@ namespace BUKEP.Student.WebFormsTodo
 
     public partial class Todo : System.Web.UI.Page
     {
-        readonly ITaskManager _taskManager = new EFDBTaskManager();
+        readonly ITaskManager _taskManager = new EfDatabaseTaskManager();
 
-		/// <summary>
-		/// Очищает все вводы на сайте
-		/// </summary>
-		/// <remarks>
-		/// Впринципе не требуется, но это делает код чище
-		/// </remarks>
-		/// <param name="setEditPanelVisibility">Задаёт видимость панели редактирования/создания задачи</param>
-		private void ClearEntries(bool setEditPanelVisibility)
+        /// <summary>
+        /// Очищает все вводы на сайте
+        /// </summary>
+        /// <remarks>
+        /// Впринципе не требуется, но это делает код чище
+        /// </remarks>
+        /// <param name="setEditPanelVisibility">Задаёт видимость панели редактирования/создания задачи</param>
+        private void ClearEntries(bool setEditPanelVisibility)
         {
             taskNameEntry.Text = string.Empty;
             taskDescriptionEntry.Text = string.Empty;
@@ -90,17 +90,17 @@ namespace BUKEP.Student.WebFormsTodo
                 ClearEntries(false);
                 return;
             }
-            if(!string.IsNullOrWhiteSpace(taskNameEntry.Text))
+            if (!string.IsNullOrWhiteSpace(taskNameEntry.Text))
             {
-				if (isEditing)
-				{
-					_taskManager.EditTask(taskId, taskNameEntry.Text, taskDescriptionEntry.Text);
-				}
-				else
-				{
-					_taskManager.AddTask(taskNameEntry.Text, taskDescriptionEntry.Text);
-				}
-			}
+                if (isEditing)
+                {
+                    _taskManager.EditTask(taskId, taskNameEntry.Text, taskDescriptionEntry.Text);
+                }
+                else
+                {
+                    _taskManager.AddTask(taskNameEntry.Text, taskDescriptionEntry.Text);
+                }
+            }
             ClearEntries(false);
 
             TaskView.DataSource = _taskManager.GetTasks();

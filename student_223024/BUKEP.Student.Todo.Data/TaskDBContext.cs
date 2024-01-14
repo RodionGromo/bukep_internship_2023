@@ -2,12 +2,12 @@
 
 namespace BUKEP.Student.Todo.Data
 {
-	class TaskDBContext : DbContext
-	{
-		public TaskDBContext() : base("Database")
-		{
-		}
+    class TaskDbContext : DbContext
+    {
+        public TaskDbContext() : base("Database")
+        {
+        }
 
-		public DbSet<Task> Tasks { get; set;}
-	}
+        public DbSet<Task> Tasks { get; set; }
+    }
 }
