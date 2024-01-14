@@ -1,15 +1,14 @@
 ﻿using BUKEP.Student.Todo;
 using BUKEP.Student.Todo.Data;
 using System;
-using System.Configuration;
 using System.Web.UI;
 
 namespace BUKEP.Student.WebFormsTodo
 {
     public partial class Deletion : Page
     {
-		readonly ITaskManager _taskManager = new DatabaseTaskManager(ConfigurationManager.ConnectionStrings["Database"].ConnectionString);
-		private Task _taskToDelete;
+        readonly ITaskManager _taskManager = new EfDatabaseTaskManager();
+        private Task _taskToDelete;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -19,7 +18,7 @@ namespace BUKEP.Student.WebFormsTodo
 
         protected void DeleteButton_Click(object sender, EventArgs e)
         {
-			_taskManager.RemoveTask(_taskToDelete);
+            _taskManager.RemoveTask(_taskToDelete);
             Response.Redirect("~/Todo.aspx");
         }
     }
