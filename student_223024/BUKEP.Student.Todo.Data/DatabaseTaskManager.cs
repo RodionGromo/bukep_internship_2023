@@ -1,6 +1,4 @@
 ﻿using Microsoft.Data.SqlClient;
-using System.Configuration;
-using Unity;
 
 namespace BUKEP.Student.Todo.Data
 {
