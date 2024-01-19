@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BUKEP.Student.Todo.Task>
+﻿@model BUKEP.Student.MvcTodo.Models.TaskModel
 
 @{
     ViewBag.Title = "Index";
@@ -28,7 +28,7 @@
             <th></th>
         </tr>
 
-        @foreach (var item in Model)
+        @foreach (var item in Model.Tasks)
         {
             <tr>
                 <td class="col-3">
@@ -44,22 +44,22 @@
             </tr>
         }
     </table>
-    @if (ViewBag.EditMode)
+    @if (Model.EditMode == true)
     {
         <div class="container border-2">
             @using (Html.BeginForm("Edit", "TaskModels", FormMethod.Post))
             {
                 <h2 class="row">Задача</h2>
-                <input placeholder="Введите название задачи..." class="row form-control widetextbox" value="@ViewBag.Name" name="taskName"/>
+                <input placeholder="Введите название задачи..." class="row form-control widetextbox" value="@Model.TaskName" name="taskName"/>
                 <h2 class="row">Описание</h2>
-                <input placeholder="Введите описание задачи..." class="row form-control widetextbox" value="@ViewBag.Description" name="taskDescription"/>
+                <input placeholder="Введите описание задачи..." class="row form-control widetextbox" value="@Model.TaskDescription" name="taskDescription"/>
                 <b class="row">&nbsp;</b>
                 <div class="row">
                     <h2 class="col-6">&nbsp;</h2>
                     <a href="/TaskModels" class="col-3 btn btn-secondary text-center">Отменить</a>
                     <input type="submit" class="col-3 btn btn-success" value="Отправить">
                 </div>
-                <input type="hidden" value="@ViewBag.Id" name="id"/>
+                <input type="hidden" value="@Model.TaskId" name="id"/>
             }
         </div>
     }

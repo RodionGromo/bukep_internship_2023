@@ -6,7 +6,7 @@
 
 <div class="container">
     <h1>Удаление задачи</h1>
-    <p>Вы уверены что хотите удалить задачу "@ViewBag.Name"? Если да, то нажмите кнопку "Удалить", иначе нажмите "Отмена".</p>
-    <a href="/TaskModels/DeleteConfirmed?id=@ViewBag.id" class="btn btn-danger">Удалить</a>
+    <p>Вы уверены что хотите удалить задачу "@Model.TaskName"? Если да, то нажмите кнопку "Удалить", иначе нажмите "Отмена".</p>
+    <a href="/TaskModels/DeleteConfirmed?id=@Model.TaskId" class="btn btn-danger">Удалить</a>
     <a href="/TaskModels/" class="btn btn-secondary">Отмена</a>
 </div>

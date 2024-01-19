@@ -3,8 +3,13 @@ using System.Data;
 using System.Linq;
 using System.Web.Mvc;
 
+# nullable enable
+
 namespace BUKEP.Student.MvcTodo.Models
 {
+    /// <summary>
+    /// Контроллер сайта /TaskModels
+    /// </summary>
     public class TaskModelsController : Controller
     {
         readonly ITaskManager _taskManager;
@@ -15,54 +20,57 @@ namespace BUKEP.Student.MvcTodo.Models
         }
 
         // GET: TaskModels
-        public ActionResult Index(bool? editMode=false, int? id=-1)
+        public ActionResult Index(bool? editMode, int? id)
         {
-            ViewBag.EditMode = editMode;
-            ViewBag.Id = id;
-            if(id > -1)
+            TaskModel taskModel = new TaskModel(_taskManager.GetTasks().ToList())
             {
-                ViewBag.Name = _taskManager.GetTasks().Where((task) => task.Id == id).First().Name;
-                ViewBag.Description = _taskManager.GetTasks().Where((task) => task.Id == id).First().Description;
+                EditMode = editMode ?? false,
+                TaskId = id,
+                TaskName = string.Empty,
+                TaskDescription = string.Empty
+            };
+            if(taskModel.TaskId != null)
+            {
+                taskModel.TaskName = _taskManager.GetTasks().Where((task) => task.Id == id).First().Name;
+                taskModel.TaskDescription = _taskManager.GetTasks().Where((task) => task.Id == id).First().Description;
             } 
-            else
-            {
-                ViewBag.Name = string.Empty;
-                ViewBag.Description = string.Empty;
-            }
-            return View(_taskManager.GetTasks());
+            return View(taskModel);
         }
 
         // GET: Edit?id=_&taskName=_&taskDescription=_
-        public ActionResult Edit(int id=-1, string taskName="", string taskDescription="")
+        public ActionResult Edit(int? id, string? taskName, string? taskDescription)
         {
-            if(id > -1)
+            if (id != null)
             {
-                _taskManager.EditTask(id, taskName, taskDescription);
+                _taskManager.EditTask((int)id, taskName, taskDescription);
                 return Redirect("/TaskModels");
             }
             else
             {
-                _taskManager.AddTask(taskName, taskDescription);
+                _taskManager.AddTask(taskName ?? "Задача без названия", taskDescription ?? "");
                 return Redirect("/TaskModels");
             }
         }
 
         // GET: Delete?id=_
-        public ActionResult Delete(int id=-1)
+        public ActionResult Delete(int? id)
         {
-            if(id > -1)
+            if (id != null)
             {
-                ViewBag.id = id;
-                ViewBag.Name = _taskManager.GetTasks().Where((task) => task.Id == id).First().Name;
-                return View();
+                TaskModel taskModel = new TaskModel(_taskManager.GetTasks().ToList())
+                {
+                    TaskId = id,
+                    TaskName = _taskManager.GetTasks().Where((task) => task.Id == id).First().Name
+                };
+                return View(taskModel);
             }
             return HttpNotFound();
         }
 
         // GET: Delete?id=_
-        public ActionResult DeleteConfirmed(int id=-1)
+        public ActionResult DeleteConfirmed(int? id)
         {
-            if(id > -1)
+            if(id != null)
             {
                 Task taskToEdit = _taskManager.GetTasks().Where((task) => task.Id == id).First();
                 _taskManager.RemoveTask(taskToEdit); 

@@ -21,7 +21,8 @@ namespace BUKEP.Student.Todo.Data
             var taskToEdit = db.Tasks.Where((task) => task.Id == id).First();
             if (!string.IsNullOrWhiteSpace(name))
             {
-                taskToEdit.Name = name;
+                // мне тут visual studio кидает предупреждение о nullable, а на описание нет, почему?
+                taskToEdit.Name = name ?? "";
             }
             if (!string.IsNullOrWhiteSpace(description))
             {
