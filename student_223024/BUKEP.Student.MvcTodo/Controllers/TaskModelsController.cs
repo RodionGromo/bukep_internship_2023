@@ -31,8 +31,9 @@ namespace BUKEP.Student.MvcTodo.Models
             };
             if(taskModel.TaskId != null)
             {
-                taskModel.TaskName = _taskManager.GetTasks().Where((task) => task.Id == id).First().Name;
-                taskModel.TaskDescription = _taskManager.GetTasks().Where((task) => task.Id == id).First().Description;
+                Task taskToEdit = _taskManager.GetTasks().Where((task) => task.Id == id).First();
+                taskModel.TaskName = taskToEdit.Name;
+                taskModel.TaskDescription = taskToEdit.Description;
             } 
             return View(taskModel);
         }

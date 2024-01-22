@@ -12,20 +12,20 @@
 <h4>&nbsp;</h4>
 <div class="container">
     <div class="row">
-        <h3 class="col-4 text-center">Список задач</h3>
+        <h3 class="col-4">Список задач</h3>
         <h3 class="col-4">&nbsp;</h3>
         <a href="/TaskModels/Index?editmode=true" class="btn btn-primary col-4 text-center">Создать новую задачу</a>
     </div>
 
     <table class="table">
         <tr>
-            <th>
+            <th class="col-4">
                 Задача
             </th>
-            <th>
+            <th class="col-4">
                 Описание
             </th>
-            <th></th>
+            <th class="col-4"></th>
         </tr>
 
         @foreach (var item in Model.Tasks)
@@ -38,25 +38,29 @@
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td class="col-4">
-                    <a href="/TaskModels/Index?id=@item.Id&editmode=true" class="btn btn-success text-center">Редактировать</a>
-                    <a href="/TaskModels/Delete?id=@item.Id" class="btn btn-danger text-center">Удалить</a>
+                    <div class="row">
+                        <a href="/TaskModels/Index?id=@item.Id&editmode=true" class="col-5 btn btn-success text-center m-1">Редактировать</a>
+                        <a href="/TaskModels/Delete?id=@item.Id" class="col-5 btn btn-danger text-center m-1">Удалить</a>
+                    </div>
                 </td>
             </tr>
         }
     </table>
     @if (Model.EditMode == true)
     {
-        <div class="container border-2">
+        <div class="container">
             @using (Html.BeginForm("Edit", "TaskModels", FormMethod.Post))
             {
                 <h2 class="row">Задача</h2>
-                <input placeholder="Введите название задачи..." class="row form-control widetextbox" value="@Model.TaskName" name="taskName"/>
-                <h2 class="row">Описание</h2>
-                <input placeholder="Введите описание задачи..." class="row form-control widetextbox" value="@Model.TaskDescription" name="taskDescription"/>
+                <input placeholder="Введите название задачи..." class="row form-control widetextbox" style="margin-bottom: 20px;"value="@Model.TaskName" name="taskName"/>
+                <div class="row">Описание задачи:</div>
+                <textarea placeholder="Введите описание задачи..." rows="3" class="row form-control widetextbox" name="taskDescription">@Model.TaskDescription</textarea>
                 <b class="row">&nbsp;</b>
                 <div class="row">
                     <h2 class="col-6">&nbsp;</h2>
-                    <a href="/TaskModels" class="col-3 btn btn-secondary text-center">Отменить</a>
+                    <a href="/TaskModels" class="col-3">
+                        <button class="btn btn-secondary" style="width: 100%; height: 100%;">Отменить</button>
+                    </a>
                     <input type="submit" class="col-3 btn btn-success" value="Отправить">
                 </div>
                 <input type="hidden" value="@Model.TaskId" name="id"/>
