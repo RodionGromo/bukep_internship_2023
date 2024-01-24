@@ -9,6 +9,7 @@ namespace BUKEP.Student.Todo.Data
     {
         // строка соединения для БД
         private readonly string _connectionString;
+        private readonly string _dbTableName = "TaskTable";
 
         public DatabaseTaskManager(string connectionString)
         {
@@ -36,7 +37,7 @@ namespace BUKEP.Student.Todo.Data
             List<Task> tasks = new();
             DoWithConnection((dbCon) =>
             {
-                SqlCommand cmd = new("SELECT * FROM TaskTable", dbCon);
+                SqlCommand cmd = new("SELECT * FROM " + _dbTableName, dbCon);
                 SqlDataReader dataReader = cmd.ExecuteReader();
                 if (dataReader.HasRows)
                 {
@@ -62,7 +63,7 @@ namespace BUKEP.Student.Todo.Data
         {
             DoWithConnection((dbCon) =>
             {
-                SqlCommand cmd = new("INSERT INTO TaskTable (Name, Description) VALUES (@Name, @Description)", dbCon);
+                SqlCommand cmd = new("INSERT INTO " + _dbTableName + " (Name, Description) VALUES (@Name, @Description)", dbCon);
                 cmd.Parameters.AddWithValue("@Name", Name);
                 cmd.Parameters.AddWithValue("@Description", Description);
                 cmd.ExecuteNonQuery();
@@ -75,7 +76,7 @@ namespace BUKEP.Student.Todo.Data
         {
             DoWithConnection((dbCon) =>
             {
-                SqlCommand cmd = new("DELETE FROM TaskTable WHERE Id = @id", dbCon);
+                SqlCommand cmd = new("DELETE FROM " + _dbTableName + " WHERE Id = @id", dbCon);
                 cmd.Parameters.AddWithValue("@id", task.Id);
                 cmd.ExecuteNonQuery();
                 return 0;
@@ -88,7 +89,7 @@ namespace BUKEP.Student.Todo.Data
             Task existingTask = new();
             DoWithConnection((dbCon) =>
             {
-                SqlCommand cmd = new($"SELECT * FROM TaskTable WHERE id = @id", dbCon);
+                SqlCommand cmd = new($"SELECT * FROM " + _dbTableName + " WHERE id = @id", dbCon);
                 cmd.Parameters.AddWithValue("@id", id);
                 SqlDataReader dataReader = cmd.ExecuteReader();
 
@@ -120,7 +121,7 @@ namespace BUKEP.Student.Todo.Data
         {
             DoWithConnection((dbCon) =>
             {
-                SqlCommand cmd = new("UPDATE TaskTable SET Name = @name, Description = @descr WHERE Id = @id", dbCon);
+                SqlCommand cmd = new("UPDATE " + _dbTableName + " SET Name = @name, Description = @descr WHERE Id = @id", dbCon);
                 cmd.Parameters.AddWithValue("@name", Name);
                 cmd.Parameters.AddWithValue("@descr", Description);
                 cmd.Parameters.AddWithValue("@id", id);

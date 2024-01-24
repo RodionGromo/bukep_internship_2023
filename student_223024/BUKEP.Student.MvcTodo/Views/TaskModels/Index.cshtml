@@ -1,0 +1,71 @@
+﻿@model BUKEP.Student.MvcTodo.Models.TaskModel
+
+@{
+    ViewBag.Title = "Index";
+}
+<style>
+    .widetextbox {
+        max-width: none;
+    }
+</style>
+
+<h4>&nbsp;</h4>
+<div class="container">
+    <div class="row">
+        <h3 class="col-4">Список задач</h3>
+        <h3 class="col-4">&nbsp;</h3>
+        <a href="/TaskModels/Index?editmode=true" class="btn btn-primary col-4 text-center">Создать новую задачу</a>
+    </div>
+
+    <table class="table">
+        <tr>
+            <th class="col-4">
+                Задача
+            </th>
+            <th class="col-4">
+                Описание
+            </th>
+            <th class="col-4"></th>
+        </tr>
+
+        @foreach (var item in Model.Tasks)
+        {
+            <tr>
+                <td class="col-3">
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td class="col-5">
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td class="col-4">
+                    <div class="row">
+                        <a href="/TaskModels/Index?id=@item.Id&editmode=true" class="col-5 btn btn-success text-center m-1">Редактировать</a>
+                        <a href="/TaskModels/Delete?id=@item.Id" class="col-5 btn btn-danger text-center m-1">Удалить</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </table>
+    @if (Model.EditMode == true)
+    {
+        <div class="container">
+            @using (Html.BeginForm("Edit", "TaskModels", FormMethod.Post))
+            {
+                <h2 class="row">Задача</h2>
+                <input placeholder="Введите название задачи..." class="row form-control widetextbox" style="margin-bottom: 20px;"value="@Model.TaskName" name="taskName"/>
+                <div class="row">Описание задачи:</div>
+                <textarea placeholder="Введите описание задачи..." rows="3" class="row form-control widetextbox" name="taskDescription">@Model.TaskDescription</textarea>
+                <b class="row">&nbsp;</b>
+                <div class="row">
+                    <h2 class="col-6">&nbsp;</h2>
+                    <a href="/TaskModels" class="col-3">
+                        <input type="button" class="btn btn-secondary" style="width: 100%; height: 100%;" value="Отменить">
+                    </a>
+                    <input type="submit" class="col-3 btn btn-success" value="Отправить">
+                </div>
+                <input type="hidden" value="@Model.TaskId" name="id"/>
+            }
+        </div>
+    }
+</div>
+

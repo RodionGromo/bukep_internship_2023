@@ -1,7 +1,7 @@
 ﻿namespace BUKEP.Student.Todo
 {
     /// <summary>
-    /// Интерфейс менеджера доступа к списку задач
+    /// Интерфейс для менеджера списка задач
     /// </summary>
     public interface ITaskManager
     {
